@@ -36,7 +36,7 @@ class RegisterUserController extends Controller
 
         $validator =  $request->validate([
             'name' =>  'required',
-            'email' =>  'required',
+            'email' =>  'required|email',
             'address' =>  'required',
             'role' =>  'required',
             'phone_number' =>  'required',

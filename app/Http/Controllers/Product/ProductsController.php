@@ -84,7 +84,9 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with('images', 'category', 'brand', 'reviews', 'vendor')->findOrFail($id);
+        return inertia::render('Products/Show', ['product' => $product]);
+        
     }
 
     /**

@@ -1,9 +1,45 @@
-import React from "react";
+import { useContext } from "react";
 import ProductsLayout from "../Layout/ProductsLayout";
-import { router, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import { Image } from "@nextui-org/image";
+import { FilterContext } from "../../context/FilterProductContext";
+import {useState, useEffect} from 'react'
 
 const Index = ({ products }) => {
+    const [producte, setproducte] = useState([])
+    const { search, min , max, category} = useContext(FilterContext);
+// console.log([min, max, category]);
+
+    useEffect(() => {
+        setproducte(products.data);
+    }, [])
+
+
+    const getFilterProducts = () => {
+        
+        let filterProduct = producte;
+
+        if(search){
+             filterProduct = filterProduct.filter((p) => {
+                return p.name.toLowerCase().includes(search.toLowerCase())
+             })
+             
+        }
+
+        // if(min){
+        //     filterProduct = filterProduct.sort((a, b) => parseInt(a.price) - parseInt(b.price))
+        // }
+
+        return filterProduct;
+
+    }
+
+    const filter = getFilterProducts();
+
+    // console.log(filter);
+    
+
+
     const { data, setData, post, errors } = useForm({
         product_id: "",
         quantity: "",
@@ -28,27 +64,28 @@ const Index = ({ products }) => {
             {/* {product.name} */}
 
             <div className="flex w-full space-x-10">
-                {products.data.map((product) => (
+                {filter.map((product) => (
                     <div
-                        className="p-2 group overflow-hidden flex w-52 h-52 flex-col relative rounded bg-gray-50"
                         key={products.id}
+                        className="p-2 group overflow-hidden flex w-52 h-60 flex-col relative rounded bg-gray-50"
                     >
-                        <div className="flex w-full rounded h-1/2 ">
+                        <div className="flex w-full  rounded h-1/2 items-center justify-center overflow-hidden">
                             <Image
-                                width={300}
-                                alt="NextUI hero Image"
-                                src={` public/storage/${product.image_url}` }
+                                className="w-full h-32 object-cover"
+                                alt="product image"
+                                loading="lazy"
+                                src={`/storage/${product.image_url}`}
                             />
                         </div>
 
-                        <div className="flex flex-col">
+                        <div className="flex flex-col mt-3">
                             <h2>{product.name}</h2>
                             <p className="text-sm font-bold">
                                 ${product.price}
                             </p>
                         </div>
 
-                        <div className="flex space-x-2 items-center mt-3">
+                        <div className="flex space-x-2 items-center mt-5">
                             <button
                                 onClick={() => handleCartItem(product)}
                                 className="px-6 py-2 w-[80%] rounded bg-black text-white text-sm font-bold"
@@ -73,7 +110,7 @@ const Index = ({ products }) => {
                             </button>
                         </div>
 
-                        <div className="absolute top-2 -right-10 transition-all animation group-hover:right-4 p-2 rounded-full bg-gray-100">
+                        <Link href={`/product/v1/${product.id}`} className="absolute top-2 -right-10 transition-all animation group-hover:right-4 p-2 rounded-full bg-gray-100">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -93,7 +130,7 @@ const Index = ({ products }) => {
                                     d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                                 />
                             </svg>
-                        </div>
+                        </Link>
                     </div>
                 ))}
             </div>

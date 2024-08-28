@@ -35,5 +35,9 @@ class Product extends Model
     {
         return $this->belongsTo(Wishlist::class);
     }
+    public function vendor():BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 
 }

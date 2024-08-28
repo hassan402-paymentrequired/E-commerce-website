@@ -19,8 +19,6 @@ Route::post('/users/logout', [AuthenticateUserController::class, 'destroy']);
 
 
 Route::middleware('auth')->group(function()  {
-    
-    
     Route::get('/vendor/store/create', [VendorController::class, 'create'])->name('vendor.create');
     Route::post('/vendor/store/create', [VendorController::class, 'store'])->name('vendor.store');
     
@@ -32,4 +30,5 @@ Route::middleware('auth')->group(function()  {
     Route::post('/product/wishlist', [WishListController::class, 'store']);
     Route::get('/products/create', [ProductsController::class, 'create']);
     Route::post('/products/create', [ProductsController::class, 'store']);
+    Route::get('/product/v1/{product}', [ProductsController::class, 'show']);
 });

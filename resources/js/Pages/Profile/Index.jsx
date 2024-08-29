@@ -10,6 +10,7 @@ const Index = ({auth}) => {
     <ProfileLayout user={auth}>
         <h1 className='font-bold '>Personal Information</h1>
 
+
         <form  className='p-3 w-full space-y-4 flex flex-col'>
             <div className="flex flex-col space-y-1">
                 <label htmlFor="email" className='text-xs font-bold'>Email Address</label>

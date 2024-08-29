@@ -40,4 +40,9 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
 
+    public function cart():BelongsTo
+    {
+       return $this->belongsTo(Cart::class);
+    }
+
 }

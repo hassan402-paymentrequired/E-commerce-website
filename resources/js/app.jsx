@@ -17,9 +17,11 @@ createInertiaApp({
   setup({ el, App, props }) {
     createRoot(el).render(
       <NextUIProvider>
-      <FilterProductProvider>
-      
+      <FilterProductProvider >
+      {/* <div style={{ scrollbarWidth: '0px' }}> */}
+
         <App {...props} />
+      {/* </div> */}
       </FilterProductProvider>
       </NextUIProvider>
   )

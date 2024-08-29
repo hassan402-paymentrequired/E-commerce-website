@@ -5,13 +5,13 @@ import { Image } from "@nextui-org/image";
 import { FilterContext } from "../../context/FilterProductContext";
 import {useState, useEffect} from 'react'
 
-const Index = ({ products }) => {
+const Index = ({ products, w, c, ac }) => {
     const [producte, setproducte] = useState([])
-    const { search, min , max, category} = useContext(FilterContext);
-// console.log([min, max, category]);
+    const { search, min , max, category, setCart} = useContext(FilterContext);
 
     useEffect(() => {
         setproducte(products.data);
+        setCart(ac)
     }, [])
 
 
@@ -36,7 +36,6 @@ const Index = ({ products }) => {
 
     const filter = getFilterProducts();
 
-    // console.log(filter);
     
 
 

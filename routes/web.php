@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Product\CartController;
 use App\Http\Controllers\Product\ProductCategory;
 use App\Http\Controllers\Product\ProductsController;
@@ -25,10 +26,16 @@ Route::middleware('auth')->group(function()  {
     Route::get('/products', [ProductsController::class, 'index']);
     Route::get('/account', [ProfileController::class, 'index']);
 
-    Route::post('/product/cart', [CartController::class, 'store']);
-    Route::post('/products/category', ProductCategory::class);
-    Route::post('/product/wishlist', [WishListController::class, 'store']);
-    Route::get('/products/create', [ProductsController::class, 'create']);
-    Route::post('/products/create', [ProductsController::class, 'store']);
-    Route::get('/product/v1/{product}', [ProductsController::class, 'show']);
+    Route::post('/product/cart', [CartController::class, 'store'])->name('cart.product.add');
+    Route::post('/products/category', ProductCategory::class)->name('product_category_add');
+    Route::post('/product/wishlist', [WishListController::class, 'store'])->name('product.wishlist');
+    Route::get('/products/create', [ProductsController::class, 'create'])->name('product.create');
+    Route::post('/products/create', [ProductsController::class, 'store'])->name('product.store');
+    Route::get('/product/v1/{product}', [ProductsController::class, 'show'])->name('product.show');
+    Route::get('/product/cart', [CartController::class, 'index'])->name('cart.show')->name('product.show');
+    Route::delete('/product/cart-destroy/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::post('/product/check-out', [PaymentController::class, 'create'])->name('product.ckeck-out');
+    Route::get('/product/check-out/success', [PaymentController::class, 'success'])->name('product.ckeck-out.success');
+    Route::get('/product/check-out/cancel', [PaymentController::class, 'cancel'])->name('product.ckeck-out.cancel');
 });

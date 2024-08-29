@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const Show = ({ product }) => {
     const [rate, setRate] = useState([]);
-    const [currentImage, setCurrentImage] = useState(product.image_url)
+    const [currentImage, setCurrentImage] = useState(product.image_url);
 
     const getRatings = () => {
         let count = product.reviews.length;
@@ -19,9 +19,8 @@ const Show = ({ product }) => {
     };
 
     const handleImageChange = (image) => {
-        setCurrentImage(image)
-    }
-
+        setCurrentImage(image);
+    };
 
     return (
         <AuthenticatedLayout>
@@ -45,9 +44,16 @@ const Show = ({ product }) => {
                             {/* loop image */}
                             <div className="flex  w-full  space-x-4 flex-1">
                                 {product.images?.map((img) => (
-                                    <div className={`p-2 bg-gray-500  ${ currentImage === img.image_url && 'border-green-500 border-2' }`}>
+                                    <div
+                                        className={`p-2 bg-gray-500  ${
+                                            currentImage === img.image_url &&
+                                            "border-green-500 border-2"
+                                        }`}
+                                    >
                                         <Image
-                                            onClick={() => setCurrentImage(img.image_url)}
+                                            onClick={() =>
+                                                setCurrentImage(img.image_url)
+                                            }
                                             className="h-[200px] object-cover  w-[300px]"
                                             alt="NextUI hero Image"
                                             src={"/storage/" + img.image_url}
@@ -80,27 +86,40 @@ const Show = ({ product }) => {
                                 </div>
 
                                 <div className="flex flex-col gap-3">
-
                                     <div className="flex gap-2 text-xs font-semibold text-black">
                                         <span>{product.category.name}</span>
                                         <span>|</span>
-                                        <span className="text-green-400">In store</span>
+                                        <span className="text-green-400">
+                                            In store
+                                        </span>
                                     </div>
 
-                                <h3 className=" text-2xl font-bold text-black ">
-                                    ${product.price}
-                                </h3>
+                                    <h3 className=" text-2xl font-bold text-black ">
+                                        ${product.price}
+                                    </h3>
 
-                                <p>{product.description}</p>
+                                    <p>{product.description}</p>
                                 </div>
 
                                 <div className="flex">
                                     <div className="flex flex-col">
-                                    <label htmlFor="" className="font-bold">vendor: </label>
-                                    <a href="#" className="ml-3 flex items-center gap-1">
-                                        <img src={`/storage/` + product.vendor.thumbnail} className="w-10 h-10 rounded-full" alt="" />
-                                        {product.vendor.name}
-                                    </a>
+                                        <label htmlFor="" className="font-bold">
+                                            vendor:{" "}
+                                        </label>
+                                        <a
+                                            href="#"
+                                            className="ml-3 flex items-center gap-1"
+                                        >
+                                            <img
+                                                src={
+                                                    `/storage/` +
+                                                    product.vendor.thumbnail
+                                                }
+                                                className="w-10 h-10 rounded-full"
+                                                alt=""
+                                            />
+                                            {product.vendor.name}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -114,6 +133,46 @@ const Show = ({ product }) => {
                     </div>
 
                     {/* addintional informal */}
+                    <div className="w-full items-center justify-center p-4">
+                        <div role="tablist" className="tabs w-full  mx-auto tabs-bordered">
+                            <input
+                                type="radio"
+                                name="my_tabs_1"
+                                role="tab"
+                                className="tab w-1/2"
+                                aria-label="Ratings and Reviews"
+                                defaultChecked
+                            />
+                            <div role="tabpanel" className="tab-content p-10">
+                                Tab content 1
+                            </div>
+
+                            <input
+                                type="radio"
+                                name="my_tabs_1"
+                                role="tab"
+                                className="tab"
+                                aria-label="Discussion"
+                                
+                            />
+                            <div role="tabpanel" className="tab-content p-10">
+                                Tab content 2
+                            </div>
+
+                            <input
+                                type="radio"
+                                name="my_tabs_1"
+                                role="tab"
+                                className="tab"
+                                aria-label="Related Product"
+                                
+                            />
+                            <div role="tabpanel" className="tab-content p-10">
+                                Tab content 2
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

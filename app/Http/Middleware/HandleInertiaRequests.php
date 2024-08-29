@@ -39,15 +39,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $cartCount = Cart::where('user_id', Auth::id())->count();
+        $cartCount = Cart::where('user_id', Auth::id())->with('cartItem')->get();
         $wishlistCountCount = Wishlist::where('user_id', Auth::id())->count();
 
+        $cartCount = count($cartCount[0]->cartItem);
+        // dd($cartCount);
         return array_merge(parent::share($request), [
             'auth' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email', 'profile', 'role')
                 : null,
-            'cart' => $cartCount,
-            'wishlist' => $wishlistCountCount
+            'ci' => $cartCount,
+            'wi' => $wishlistCountCount
         ]);
     }
 }

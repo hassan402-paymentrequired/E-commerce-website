@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +22,16 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::paginate(10);
-        return inertia('Products/Index', ['products' => $products]);
+        $wishlist = Wishlist::where('user_id', Auth::id())->get();
+        $cart = Cart::where('user_id', Auth::id())->get();
+        // $carts = 
+
+       $d = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
+
+    //    dd($d);
+      
+
+        return inertia('Products/Index', ['products' => $products, 'c' => $cart, 'w' => $wishlist, 'ac' => $d]);
     }
 
     /**
@@ -38,8 +49,6 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-
-        // dd($request->all());
 
 
         $product = Validator::make($request->all()[0], [
@@ -64,10 +73,9 @@ class ProductsController extends Controller
             'image_url' => $product['image']->store('productImages')
         ]);
 
-        if ($request->hasFile('images')) {
-            $product_images = $request->allFiles();
+        if ($request->all()[1]) {
 
-            foreach ($product_images['images'] as $value) {
+            foreach ($request->all()[1] as $value) {
                     $path = $value->store('productImages');
                     $product->images()->create([
                         'image_url' => $path

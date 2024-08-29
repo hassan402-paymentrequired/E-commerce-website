@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Product;
 use App\Events\CartEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class CartController extends Controller
 {
@@ -16,7 +18,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+         $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
+        return Inertia::render('Products/CartIndex', ['carts' => $carts]);
     }
 
     /**
@@ -32,14 +35,30 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->product_id);
-       Cart::create([
-        'product_id' => $request->product_id,
-        'user_id' => Auth::id(),
-        'quantity' => $request->quantity
-       ]);
+        // dd($request->all());
+        $cartExist = Cart::where('user_id', Auth::id())->get();
 
-       $product = Product::find($request->product_id);
+        // dd($cartExist->all());
+        if(count($cartExist) > 0){
+
+            CartItem::create([
+                'product_id' => $request->product_id,
+                'cart_id' => $cartExist->all()[0]->id
+               ]);
+
+        }else{
+
+            $cart = Cart::create([
+             'user_id' => Auth::id(),
+            ]);
+     
+            $cart->cartItem()->create([
+             'product_id' => $request->product_id
+            ]);
+     
+        }
+        $product = Product::find($request->product_id);
+
 
        broadcast(new CartEvent(Auth::user(), $product ));
     }
@@ -73,6 +92,11 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $product = CartItem::where('product_id', $id)->get();
+        $product = CartItem::where('product_id', '=', $id)->firstOrFail();
+        $product->delete();
+
+        return redirect()->back();
+
     }
 }

@@ -6,55 +6,64 @@ import AddCategory from "./AddCategory";
 const Create = ({ profile, categories, brands }) => {
     const [ShowAddCategoryBtn, setShowAddCategoryBtn] = useState(false)
     const showImage1 = useRef();
-    const showImage2 = useRef();
-    const showImage3 = useRef();
-    const showImage4 = useRef();
-    const showImage5 = useRef();
     const [images, setimages] = useState([]);
+    const [pic, setpic] = useState("");
 
-    const { data, setData, post, processing, errors } = useForm({
-        name: "",
-        description: "",
-        price: "",
-        image: null,
-        category: "",
-        brand: "",
-    });
-
-    if (images.length > 0) {
-        blah1.src = data.image ? URL.createObjectURL(data.image) : "";
-        blah2.src = images[1] ? URL.createObjectURL(images[1]) : "";
-        blah3.src = images[2] ? URL.createObjectURL(images[2]) : "";
-        blah4.src = images[3] ? URL.createObjectURL(images[3]) : "";
-        blah5.src = images[4] ? URL.createObjectURL(images[4]) : "";
-    }
-
-  
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        router.post("/products/create",[ data, images]);
-        // console.log([data, images])
-    };
 
     const handleBtnState = () => {
         setShowAddCategoryBtn(true);
     }
 
+    const handleFileUpload = e => {
+        if(images.length >= 5)
+        {
+            alert('You cannot choose more than five images')
+            return;
+        }
+
+        if(images.includes(e.target.files[0]))
+            {
+               return alert('You cannot choose more than one copy of image')
+                // return;
+            }
+
+        setimages([...images, e.target.files[0]])
+    }
+
     const focusInput1 = () => {
         showImage1.current.click();
     };
-    const focusInput2 = () => {
-        showImage2.current.click();
-    };
-    const focusInput3 = () => {
-        showImage3.current.click();
-    };
-    const focusInput4 = () => {
-        showImage4.current.click();
-    };
-    const focusInput5 = () => {
-        showImage5.current.click();
+
+    const removeImageFromUpload = imag => {
+        let image = images
+        image = image.filter(img => {
+            return imag !== img
+        })
+        setimages(image)
+    }
+
+    const AddImageToFavourite = (image) => {
+       let img = images.filter(img => {
+            return img !== image
+        })
+        setimages([image, ...img])
+        setpic(image)
+    }
+
+    const { data, setData, post, processing, errors } = useForm({
+        name: "",
+        description: "",
+        price: "",
+        image: pic,
+        category: "",
+        brand: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        data.image = images[0];
+        router.post("/products/create",[ data, images]);
+        // console.log([data, images])
     };
 
     return (
@@ -69,137 +78,30 @@ const Create = ({ profile, categories, brands }) => {
                 <div className="flex w-full space-x-10">
                     {/* images upload */}
 
+
+                  {images?.map(img => (
+                    <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden relative" key={Math.random() * new Date().getTime()}>
+                       <div className="flex absolute justify-between px-3 top-1 left-0 w-full">
+                       <span className="w-5 h-5 flex items-center cursor-pointer justify-center rounded-full bg-gray-300" onClick={() => AddImageToFavourite(img)}>@</span>
+                       <span className="w-5 h-5 flex items-center cursor-pointer justify-center rounded-full bg-gray-300" onClick={() => removeImageFromUpload(img)}>x</span>
+                       </div>
+                        <img src={URL.createObjectURL(img)} className="rounded w-full h-full" />
+                    </div>
+                  )) }
+
                     <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden">
                         <input
                             type="file"
                             className="hidden"
                             ref={showImage1}
-                            onChange={(e) =>
-                                setData('image', e.target.files[0])
-                            }
+                            onChange={handleFileUpload}
                         />
-                        <img src="" id="blah1" alt="" className="rounded w-full h-full" />
                         <svg
                             onClick={focusInput1}
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
-                            className={` size-10 mt-5 self-center cursor-pointer flex   `}
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden object-contain">
-                        <input
-                            type="file"
-                            className="hidden"
-                            ref={showImage2}
-                            onChange={(e) =>
-                                setimages([...images, e.target.files[0]])
-                            }
-                        />
-                        <img
-                            src=""
-                            id="blah2"
-                            alt=""
-                            className="rounded h-full w-full"
-                        />
-                        <svg
-                            onClick={focusInput2}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={` size-10 mt-5 self-center cursor-pointer flex  `}
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden object-contain ">
-                        <input
-                            type="file"
-                            className="hidden"
-                            ref={showImage3}
-                            onChange={(e) =>
-                                setimages([...images, e.target.files[0]])
-                            }
-                        />
-                        <img
-                            src=""
-                            id="blah3"
-                            alt=""
-                            className="rounded w-full h-full"
-                        />
-                        <svg
-                            onClick={focusInput3}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={` size-10 mt-5 self-center cursor-pointer flex  `}
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden object-contain">
-                        <input
-                            type="file"
-                            className="hidden"
-                            ref={showImage4}
-                            onChange={(e) =>
-                                setimages([...images, e.target.files[0]])
-                            }
-                        />
-                        <img src="" id="blah4" alt="" className="rounded" />
-                        <svg
-                            onClick={focusInput4}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={` size-10 mt-5 self-center cursor-pointer flex `}
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="flex flex-col gap-3 w-28 h-28 rounded border-dashed border-2 overflow-hidden object-contain">
-                        <input
-                            type="file"
-                            className="hidden"
-                            ref={showImage5}
-                            onChange={(e) =>
-                                setimages([...images, e.target.files[0]])
-                            }
-                        />
-                        <img
-                            src=""
-                            id="blah5"
-                            alt=""
-                            className="rounded w-full h-full"
-                        />
-                        <svg
-                            onClick={focusInput5}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={` size-10 mt-5 self-center cursor-pointer flex `}
+                            className={` size-12 mt-7 self-center cursor-pointer flex   `}
                         >
                             <path
                                 fillRule="evenodd"

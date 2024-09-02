@@ -26,3 +26,28 @@ export const Brands = [
     "teckno",
     "Kelloggs"
 ]
+
+export const MinPriceSort = (products) => {
+
+    // for (let i = 0; i <= products.length; i++) {
+    //     let temp = 0;
+        
+    //     for (let j = 1; j <= products.length - 1; j++) {
+            
+    //         if (products[i].price > products[j].price) {
+    //             temp = products[i];
+    //             products[i] = products[j];
+    //             products[j] = temp;
+    //         }
+
+            
+    //     }
+
+        
+    // }
+    // products
+     let minimum;
+    minimum = products.sort((a,b) => b.price - a.price)
+    return minimum
+
+}

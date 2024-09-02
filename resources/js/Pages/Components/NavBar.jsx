@@ -19,12 +19,6 @@ const NavBar = () => {
     const iconClasses =
         "text-xl text-default-500 pointer-events-none flex-shrink-0";
 
-    // console.log(carts[0].cart_item);
-
-    const handleCartClick = () => {
-        setCartVisible(!cartVisible);
-    };
-
     return (
         <divb className="w-full h-14 border-b-[1px]  justify-center pr-32">
             <ul className="flex space-x-3 h-full w-full items-center justify-end">
@@ -70,7 +64,7 @@ const NavBar = () => {
                             <DropdownSection title="Cart">
                                 {carts[0]?.cart_item?.map((product) => (
                                         <DropdownItem
-                                            key="new"
+                                            key={product.id}
                                             shortcut={`$${product.product.price}`}
                                             // startContent={<AddNoteIcon className={iconClasses} />}
                                         >

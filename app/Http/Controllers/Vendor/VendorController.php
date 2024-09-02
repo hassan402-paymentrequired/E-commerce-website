@@ -34,7 +34,7 @@ class VendorController extends Controller
     $varibles = $request->validate([
         'name' => 'required',
         'description' => 'required',
-        'thumbnail' => File::types(['png', 'jpeg', 'jpg', 'svg'])
+        'thumbnail' => File::types(['png', 'jpeg', 'jpg', 'svg', 'webp'])
     ]);
 
     

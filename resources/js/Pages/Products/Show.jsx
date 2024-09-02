@@ -4,10 +4,15 @@ import AuthenticatedLayout from "../Layout/AuthenticatedLayout";
 import NavBar from "../Components/NavBar";
 import { Image } from "@nextui-org/react";
 import { useState } from "react";
+import ProductRatings from "./ProductRatings";
+import ProductDiscussion from "./ProductDiscussion";
+import RelatedProducts from "./RelatedProducts";
 
 const Show = ({ product }) => {
     const [rate, setRate] = useState([]);
     const [currentImage, setCurrentImage] = useState(product.image_url);
+
+    
 
     const getRatings = () => {
         let count = product.reviews.length;
@@ -43,7 +48,7 @@ const Show = ({ product }) => {
 
                             {/* loop image */}
                             <div className="flex  w-full  space-x-4 flex-1">
-                                {product.images?.map((img) => (
+                                {product?.images?.map((img) => (
                                     <div
                                         className={`p-2 bg-gray-500  ${
                                             currentImage === img.image_url &&
@@ -132,19 +137,19 @@ const Show = ({ product }) => {
                         </div>
                     </div>
 
-                    {/* addintional informal */}
+                    {/* additional informal */}
                     <div className="w-full items-center justify-center p-4">
                         <div role="tablist" className="tabs w-full  mx-auto tabs-bordered">
                             <input
                                 type="radio"
                                 name="my_tabs_1"
                                 role="tab"
-                                className="tab w-1/2"
+                                className="tab w-full"
                                 aria-label="Ratings and Reviews"
                                 defaultChecked
                             />
-                            <div role="tabpanel" className="tab-content p-10">
-                                Tab content 1
+                            <div role="tabpanel" className="tab-content p-10 w-full">
+                                <ProductRatings rating={product.reviews}/>
                             </div>
 
                             <input
@@ -156,7 +161,7 @@ const Show = ({ product }) => {
                                 
                             />
                             <div role="tabpanel" className="tab-content p-10">
-                                Tab content 2
+                                <ProductDiscussion/>
                             </div>
 
                             <input
@@ -168,7 +173,7 @@ const Show = ({ product }) => {
                                 
                             />
                             <div role="tabpanel" className="tab-content p-10">
-                                Tab content 2
+                                <RelatedProducts/>
                             </div>
 
                         </div>

@@ -7,6 +7,8 @@ use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
+use App\Models\Vendor;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,11 +65,16 @@ class ProductsController extends Controller
 
         $category_id = Category::query()->where('name', 'like', '%' . $product['category'] . '%')->get();
 
+        $vendor = Vendor::where('user_id', '=' , Auth::id())->get();
+
+        $vendor = $vendor[0]->id;
+
+
         $product = Product::create([
             'name' => $product['name'],
             'description' => $product['description'],
             'price' => $product['price'],
-            'vendor_id' => Auth::id(),
+            'vendor_id' => $vendor,
             'category_id' => $category_id[0]['id'],
             'brand_id' => 1,
             'image_url' => $product['image']->store('productImages')
@@ -92,7 +99,10 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::with('images', 'category', 'brand', 'reviews', 'vendor')->findOrFail($id);
+        $product = Product::with('images', 'category', 'brand', 'reviews.user', 'vendor')->findOrFail($id);
+
+        // $reviews = Review::find()
+
         return inertia::render('Products/Show', ['product' => $product]);
         
     }

@@ -8,15 +8,15 @@ const CartIndex = ({carts}) => {
 
     useEffect(() => {
 
-        setProduct(carts[0].cart_item)
+        setProduct(carts[0]?.cart_item)
       
     }, [])
     let price = 0;
-    const {post, data, setData} = useForm(product)
+    const {post, data, setData, errors} = useForm(product)
 
 
     const handlecartTotal = e => {
-        product.forEach((p) => {
+        product?.forEach((p) => {
             price += parseInt(p.product.price);
             
         })
@@ -24,14 +24,16 @@ const CartIndex = ({carts}) => {
 
     handlecartTotal()
 
-  let tax = parseFloat(7 * price / 100)   
+  let tax = parseFloat(7 * price / 100)  
+  let amount = tax +  price ;
   
   const handleCheckOut = e => {
     e.preventDefault();
     post('/product/check-out', data);
+    
   }
 
-    
+    console.log(errors)
   return (
     <div className='w-full flex flex-col gap-4' >
         <NavBar/>
@@ -42,7 +44,7 @@ const CartIndex = ({carts}) => {
 
             <div className="grid md:grid-cols-3 gap-8 mt-16">
                 <div className="md:col-span-2 space-y-4 overflow-hidden overflow-y-auto h-[80vh]">
-                    { product.map(cartItem => (
+                    { product?.length ? product?.map(cartItem => (
                         <>
                     <div className="grid grid-cols-3 items-start gap-4" key={cartItem.product.id}>
                         <div className="col-span-2 flex items-start gap-4">
@@ -79,7 +81,12 @@ const CartIndex = ({carts}) => {
 
                     <hr className="border-gray-300" />
                     </>
-                    )) }
+                    )) :
+                    <>
+                     <h1 className='text-4xl font-bold text-gray-500 text-center'>No Item In Your Cart </h1> 
+                     <Link href='/products' className='text-sm text-blue-500 font-bold underline ml-[10rem] flex '>Go shopping</Link>
+                     </>
+                     }
 
 
                  
@@ -96,12 +103,12 @@ const CartIndex = ({carts}) => {
                         <li className="flex flex-wrap gap-4 text-sm">Shipping <span className="ml-auto font-bold">$2.00</span></li>
                         <li className="flex flex-wrap gap-4 text-sm">Tax <span className="ml-auto font-bold">${tax}</span></li>
                         <hr className="border-gray-300" />
-                        <li className="flex flex-wrap gap-4 text-sm font-bold">Total <span className="ml-auto">$206.00</span></li>
+                        <li className="flex flex-wrap gap-4 text-sm font-bold">Total <span className="ml-auto">${parseInt(amount + 2)}.00</span></li>
                     </ul>
 
                     <div className="mt-6 space-x-3  flex ">
                         <Link href='/products' className=" text-sm px-4 py-1.5  font-semibold  bg-transparent text-gray-800 border border-gray-300 rounded-md">Continue Shopping  </Link>
-                        <form onSubmit={handleCheckOut} >
+                        <form onSubmit={handleCheckOut}  className={`${product?.length ? 'flex' : 'hidden'}`}>
                            <button type='submit' className="text-sm px-4 py-1.5  font-semibold bg-gray-800 hover:bg-gray-900 text-white rounded-md">Checkout</button>
                         </form>
                     </div>

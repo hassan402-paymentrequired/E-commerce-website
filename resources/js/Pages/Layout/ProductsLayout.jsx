@@ -6,10 +6,7 @@ import { FilterContext } from "../../context/FilterProductContext.js";
 import {useState} from 'react'
 import NavBar from "../Components/NavBar.jsx";
 
-const ProductsLayout = ({ children, }) => {
-
-        const {cart, wishlist} = usePage().props;  
-        
+const ProductsLayout = ({ children, }) => {        
         const {setsearch, search, min, max, category, setCategory, setMin, setMax} = useContext(FilterContext);
         
      

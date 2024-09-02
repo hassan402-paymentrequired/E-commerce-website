@@ -4,6 +4,7 @@ import { Link, router, useForm } from "@inertiajs/react";
 import { Image } from "@nextui-org/image";
 import { FilterContext } from "../../context/FilterProductContext";
 import {useState, useEffect} from 'react'
+import { MinPriceSort } from "../Components/utils";
 
 const Index = ({ products, w, c, ac }) => {
     const [producte, setproducte] = useState([])
@@ -26,9 +27,11 @@ const Index = ({ products, w, c, ac }) => {
              
         }
 
-        // if(min){
-        //     filterProduct = filterProduct.sort((a, b) => parseInt(a.price) - parseInt(b.price))
-        // }
+        if(min){
+            console.log(filterProduct);
+            
+            filterProduct = MinPriceSort(filterProduct);
+        }
 
         return filterProduct;
 
@@ -62,7 +65,7 @@ const Index = ({ products, w, c, ac }) => {
             <h1 className="text-lg font-semibold">Products</h1>
             {/* {product.name} */}
 
-            <div className="flex w-full space-x-10">
+            <div className=" w-full space-x-10 grid grid-cols-4 gap-3 ">
                 {filter.map((product) => (
                     <div
                         key={products.id}

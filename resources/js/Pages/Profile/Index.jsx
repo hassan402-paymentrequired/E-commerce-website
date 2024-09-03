@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/react'
 
 const Index = ({auth}) => {
   
+
   
   return (
     

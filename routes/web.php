@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Order\TrackOrder;
+use App\Http\Controllers\Order\TrackOrderController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Product\CartController;
 use App\Http\Controllers\Product\ProductCategory;
@@ -26,10 +28,10 @@ Route::middleware('auth')->group(function()  {
     Route::get('/products', [ProductsController::class, 'index']);
     Route::get('/account', [ProfileController::class, 'index']);
 
-    // Route::post('/product/check-out', [PaymentController::class, 'create'])->name('product.ckeck-out');
-    Route::post('/product/check-out', [PaymentController::class, 'paystack'])->name('product.ckeck-out');
-    Route::post('/product/webhook', [PaymentController::class, 'webhook'])->name('check-out.webhook');
-
+    Route::post('/product/check-out', [PaymentController::class, 'redirectToGateway'])->name('pay');
+    Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+    Route::get('/product/order/{order}',[TrackOrderController::class, 'track']);
+    Route::get('/order',[TrackOrderController::class, 'index']);
 
     Route::post('/product/cart', [CartController::class, 'store'])->name('cart.product.add');
     Route::post('/products/category', ProductCategory::class)->name('product_category_add');

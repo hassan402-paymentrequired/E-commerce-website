@@ -38,6 +38,7 @@ const Login = () => {
                                 onSubmit={handleSubmit}
                             >
                                 <div className="flex flex-wrap -mx-3 mb-3">
+                                    <p className='text-xl font-bold py-1'>👋 Hi There, Welcome back</p>
                                     <div className="w-full px-3">
                                         <label
                                             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"

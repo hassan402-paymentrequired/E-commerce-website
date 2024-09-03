@@ -5,63 +5,82 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Orders;
+use App\Models\Transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Str;
 use Stripe\Climate\Order;
+
+use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+use Paystack;
+use Unicodeveloper\Paystack\Paystack as PaystackPaystack;
 
 class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function handleGatewayCallback()
     {
-        //
-    }
+        $paymentDetails = Paystack::getPaymentData();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
+        // dd($paymentDetails['data']);
+
+        $payment = $paymentDetails['data'];
+
+        
+        $transaction = Transactions::create([
+            'user_id' => Auth::id(),
+            'transaction_type' => $payment['channel'],
+            'amount' => $payment['amount'],
+            'currency' => $payment['currency'],
+            'status' => $payment['status'],
+            'reference' => $payment['reference']
+        ]);
+
+        $order = Orders::create([
+            'user_id' => Auth::id(),
+            'total_amount' => $payment['amount'],
+            'currency' => $payment['currency'],
+            'status' => 'pending',
+            'order_number' =>'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(5)),
+            'payment_method' => $payment['channel'],
+            'shipping_address' => Auth::user()->address,
+        ]);
+
         $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
-        $cart = $carts->all()[0]->cartItem;
-        // dd($cart);
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-        $line = [];
-        $total= 0;
-        foreach ($cart as $value) {
-            $line[] = [[
-                'price_data' => [
-                  'currency' => 'usd',
-                  'product_data' => [
-                    'name' => $value->product->name,
-                    // 'image' => [$value->product->image_url],
-                  ],
-                  'unit_amount' => $value->product->price * 100,
-                ],
-                'quantity' => 1,
-              ]];
-              $total += $value->product->price;
-        }
 
-        $session = $stripe->checkout->sessions->create([
-            'line_items' => $line,
-            'mode' => 'payment',
-            'success_url' => route('product.check-out.success', [], true),
-            'cancel_url' => route('product.check-out.cancel', [], true),
-          ]);
+        $carts[0]->delete();
 
-          $order = new Order();
 
-          $order->status = 'pending';
-          $order->user_id = Auth::id();
-          $order->total_amount = $total;
-          $order->session_id = $session->id;
-
-          return redirect($session->url);
-          
+        return Inertia::render('Payment/PaymentSuccess', ['product' => Auth::user()->phone_number , 'order' => $order ]);
+        
     }
+
+    public function redirectToGateway()
+    {
+        try{
+
+            $data = array(
+                "amount" => 700 * 100,
+                "reference" => '',
+                "email" => 'user@mail.com',
+                "currency" => "NGN",
+                "orderID" => 23456,
+            );
+
+
+            return Paystack::getAuthorizationUrl($data)->redirectNow();
+
+        }catch(\Exception $e) {
+            dd($e->getMessage());
+            return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
+        }        
+    }
+
+
 
 
     public function success(Request $request)
@@ -72,116 +91,5 @@ class PaymentController extends Controller
     public function cancel(Request $request)
     {
         return "failure";
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function webhook(Request $request)
-    {
-        $endpoint_secret = env('WEBHOOK_SECRET');
-        $payload = @file_get_contents('php://input');
-        $sign = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-        $event = null;
-
-        try {
-
-            $event = \Stripe\Webhook::constructEvent(
-                $payload,
-                $sign,
-                $endpoint_secret
-            );
-            
-        } catch (\UnexpectedValueException $th) {
-           return response('', 400);
-        }catch(\Stripe\Exception\SignatureVerificationException $e){
-           return response('', 400);
-        }
-
-        switch ($event->type ) {
-            case 'checkout.session.completed':
-               $sesssion = $event->data->object;
-
-               $order = Orders::where('session_id', $sesssion->id)->first();
-
-               if($order && $order->status === 'pending')
-               {
-                $order->status = 'paid';
-                $order->save();
-               }
-                break;
-            
-            default:
-                dd('error');
-                break;
-        }
-
-        return response('');
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function paystack(Request $request)
-    {
-        $url = "https://api.paystack.co/transaction/initialize";
-
-        $fields = [
-          'email' => "customer@email.com",
-          'amount' => "20000",
-          'callback_url' => "http://127.0.0.1:8000/product/cart",
-          'metadata' => ["cancel_action" => "http://127.0.0.1:8000/product/cart"]
-        ];
-      
-        $fields_string = http_build_query($fields);
-      
-        //open connection
-        $ch = curl_init();
-        
-        //set the url, number of POST vars, POST data
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          "Authorization: Bearer sk_test_f04a3b53739653d3fc87b01a2fdcb4835562bcad",
-          "Cache-Control: no-cache",
-          "Access-Control-Allow-Origin: *"
-        ));
-        
-        //So that curl_exec returns the contents of the cURL; rather than echoing it
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-        
-        //execute post
-        $result = curl_exec($ch);
-
-        $result = json_decode($result, true);
-        dd($result);
-       return redirect(url($result['data']['authorization_url']));
-
     }
 }

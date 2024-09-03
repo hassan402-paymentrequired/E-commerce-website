@@ -15,7 +15,9 @@ class Kernel
      */
 
      protected $middleware = [
-        \Fruitcake\Cors\HandleCors::class,
+        // \Fruitcake\Cors\HandleCors::class,
+        // \Barryvdh\Cors\HandleCors::class,
+
           // ...
       ];
       

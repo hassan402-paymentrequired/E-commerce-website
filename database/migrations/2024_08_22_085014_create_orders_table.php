@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['pending', 'completed', 'shipped', 'unpaid', 'paid']);
-            $table->double('total_amount');
-            $table->string('address')->nullable();
-            $table->string('session_id');
+            $table->string('order_number')->unique(); 
+            $table->decimal('total_amount', 10, 2); 
+            $table->string('currency')->default('NGN'); 
+            $table->text('shipping_address')->nullable()->nullable(); 
+            $table->text('billing_address')->nullable()->nullable(); 
+            $table->string('payment_method')->nullable()->nullable(); 
             $table->timestamps();
         });
     }

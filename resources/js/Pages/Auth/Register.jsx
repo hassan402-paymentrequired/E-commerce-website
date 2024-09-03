@@ -29,7 +29,7 @@ const Register = () => {
 
     // if(data.profile){
 
-        uri.src = data.profile !== "" ? URL.createObjectURL(data.profile) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
+        const uri = data.profile !== "" ? URL.createObjectURL(data.profile) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
     // }
 
 
@@ -66,7 +66,7 @@ const Register = () => {
                                     
                                 >
 
-                                    <img src="" id="uri" alt="profile image" className={`w-full h-full rounded-full`} />
+                                    <img src={uri} id="uri" alt="profile image" className={`w-full h-full rounded-full`} />
 
 
                                     <span onClick={handleProfileImageUploadClick}>

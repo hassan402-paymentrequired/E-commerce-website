@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../Components/NavBar'
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
+import Paystack from '@paystack/inline-js';
+// import { Inertia } from '@inertiajs/inertia';
+
 
 const CartIndex = ({carts}) => {
 
     const [product, setProduct] = useState([]);
+
+    const {auth:user} = usePage().props;
+
+    
 
     useEffect(() => {
 
@@ -12,7 +19,7 @@ const CartIndex = ({carts}) => {
       
     }, [])
     let price = 0;
-    const {post, data, setData, errors} = useForm(product)
+    const {post,get, data, setData, errors} = useForm(product)
 
 
     const handlecartTotal = e => {
@@ -29,7 +36,30 @@ const CartIndex = ({carts}) => {
   
   const handleCheckOut = e => {
     e.preventDefault();
-    post('/product/check-out', data);
+    // post('/product/check-out', data);
+    const popup = new Paystack()
+
+    popup.checkout({
+        key: 'pk_test_7e8ce2fc972866c6f90eaa73dce4a71c97fc6e4f',
+        first_name: user.name,
+        email: user.email,
+        amount: parseInt(amount) * 100,
+        onSuccess: (transaction) => {
+          console.log(transaction);
+          get(`/payment/callback${transaction.redirecturl}`);
+        },
+        onLoad: (response) => {
+          console.log("onLoad: ", response);
+        },
+        onCancel: () => {
+          console.log("onCancel");
+        },
+        onError: (error) => {
+          console.log("Error: ", error.message);
+        }
+      })
+
+
     
   }
 

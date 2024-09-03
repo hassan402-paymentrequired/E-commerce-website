@@ -123,8 +123,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'providers' => [
-        Unicodeveloper\Paystack\PaystackServiceProvider::class,
-    ],
+    // 'providers' => [
+    //     // Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    //     // Barryvdh\Cors\ServiceProvider::class,
+    // ],
+    
 
 ];

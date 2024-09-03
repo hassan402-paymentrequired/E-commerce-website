@@ -28,9 +28,12 @@ return [
     */
     'allowed_methods' => ['*'],
 
+    'path' => ['*/*'],
+
     /*
      * Matches the request origin. `['*']` allows all origins. Wildcards can be used, eg `*.mydomain.com`
      */
+    // 'allowed_origins' => ['*'],
     'allowed_origins' => ['*'],
 
     /*

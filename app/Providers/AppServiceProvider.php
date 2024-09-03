@@ -21,9 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        // inertia::share('auth', function() {
-        //     return auth()->user();
-        // })
         
     }
 }

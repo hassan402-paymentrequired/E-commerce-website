@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import ProfileLayout from "../Layout/ProfileLayout";
+import VendorDashboardLayout from "../Layout/VendorDashboardLayout";
 import { Link, router, useForm } from "@inertiajs/react";
 import AddCategory from "./AddCategory";
 
@@ -67,7 +67,8 @@ const Create = ({ profile, categories, brands }) => {
     };
 
     return (
-        <ProfileLayout profile={profile}>
+        <VendorDashboardLayout >
+            <div className="p-5">
             <AddCategory show={ShowAddCategoryBtn} setShow={setShowAddCategoryBtn}/>
             <h1 className="font-bold ">Add product</h1>
 
@@ -240,7 +241,8 @@ const Create = ({ profile, categories, brands }) => {
                     Add Product
                 </button>
             </form>
-        </ProfileLayout>
+            </div>
+        </VendorDashboardLayout>
     );
 };
 

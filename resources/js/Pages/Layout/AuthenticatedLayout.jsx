@@ -1,13 +1,14 @@
 import { usePage } from "@inertiajs/react";
 import React, { useContext, useEffect } from "react";
 import { FilterContext } from "../../context/FilterProductContext";
+import Notification from "../Components/Notification";
+
 
 const AuthenticatedLayout = ({ children }) => {
 
     const {auth:user} = usePage().props;
     const { search, min , max, category, setCart, carts} = useContext(FilterContext);
 
-    console.log(carts);
     
     useEffect(() => {
 
@@ -19,6 +20,8 @@ const AuthenticatedLayout = ({ children }) => {
             
         }).listen('WishListEvent', e => {
             console.log(e);
+        }).listen('OrderPlaceEvent', e => {
+            console.log(e)
         })
     
     }, [])
@@ -26,6 +29,7 @@ const AuthenticatedLayout = ({ children }) => {
 
     return (
         <div>
+            <Notification />
             <div className="w-full">{children}</div>
         </div>
     );

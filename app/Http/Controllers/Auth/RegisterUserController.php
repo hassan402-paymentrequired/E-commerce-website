@@ -34,6 +34,7 @@ class RegisterUserController extends Controller
     public function store(Request $request)
     {
 
+
         $validator =  $request->validate([
             'name' =>  'required',
             'email' =>  'required|email',
@@ -55,6 +56,7 @@ class RegisterUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
 
 
         if($user['role'] === "vendor"){

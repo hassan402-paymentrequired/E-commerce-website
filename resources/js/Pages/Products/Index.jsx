@@ -50,6 +50,7 @@ const Index = ({ products, w, c, ac }) => {
     const handleCartItem = (product) => {
         router.post("/product/cart", {
             product_id: product.id,
+            price: product.price,
             quantity: 1,
         });
     };

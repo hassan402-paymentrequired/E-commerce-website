@@ -34,6 +34,15 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function OrderHistory(): HasMany
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+    public function orderItem(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     
 
     /**

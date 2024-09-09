@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\Payment;
 
+use App\Events\OrderPlaceEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Orders;
 use App\Models\Transactions;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Str;
 use Stripe\Climate\Order;
 
 use App\Http\Requests;
+use App\Models\CartItem;
+use App\Models\Product;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Paystack;
@@ -27,6 +32,14 @@ class PaymentController extends Controller
         $paymentDetails = Paystack::getPaymentData();
 
         // dd($paymentDetails['data']);
+        $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
+
+
+
+
+        // dd($carts[0]->cartItem);
+
+      
 
         $payment = $paymentDetails['data'];
 
@@ -50,9 +63,27 @@ class PaymentController extends Controller
             'shipping_address' => Auth::user()->address,
         ]);
 
-        $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
+        $vendorProducts = [];
+
+        foreach ($carts[0]->cartItem as $value) {
+            $vendor = Product::find($value->product_id);
+            // Broadcast(new OrderPlaceEvent($vendor->vendor , $vendor));
+
+            // dd($vendor->vendor->id);
+
+
+           $order->OrderItems()->create([
+                'quantity' => $value->quantity,
+                'price' => $value->price,
+                'vendor_id' => $vendor->vendor->id,
+                'user_id' => Auth::id(),
+                'product_id' => $value->product_id
+            ]);
+      
+        }
 
         $carts[0]->delete();
+
 
 
         return Inertia::render('Payment/PaymentSuccess', ['product' => Auth::user()->phone_number , 'order' => $order ]);

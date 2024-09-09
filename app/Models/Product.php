@@ -30,6 +30,10 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function OrderHistory(): HasMany
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
 
     public function wishlist():BelongsTo
     {
@@ -43,6 +47,10 @@ class Product extends Model
     public function cart():BelongsTo
     {
        return $this->belongsTo(Cart::class);
+    }
+    public function cartItem():HasMany
+    {
+       return $this->hasMany(CartItem::class);
     }
 
 }

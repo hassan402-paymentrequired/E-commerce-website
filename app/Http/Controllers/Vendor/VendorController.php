@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderItem;
+use App\Models\Orders;
+use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
+use Inertia\Inertia;
 
 class VendorController extends Controller
 {
@@ -15,7 +19,14 @@ class VendorController extends Controller
      */
     public function index()
     {
-        //
+        $vendor = Vendor::where('user_id', Auth::id())->get();
+        $order = OrderItem::with('vendor', 'user', 'product')->where('vendor_id',  $vendor[0]->id)->latest()->limit(4)->get();
+        // dd($order);
+        return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order]);
+    }
+    public function setting()
+    {
+        return Inertia::render('Vendor/Setting');
     }
 
     /**
@@ -26,6 +37,16 @@ class VendorController extends Controller
         return inertia('Vendor/Create');
     }
 
+
+    public function AllVendorProduct()
+    {
+        $vendor = Vendor::where('user_id', Auth::id())->first();
+
+
+         $products = $vendor->products;
+        return Inertia::render('Vendor/VendorProducts', ['products' => $products]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -34,6 +55,7 @@ class VendorController extends Controller
     $varibles = $request->validate([
         'name' => 'required',
         'description' => 'required',
+        'address' => 'required',
         'thumbnail' => File::types(['png', 'jpeg', 'jpg', 'svg', 'webp'])
     ]);
 
@@ -42,21 +64,27 @@ class VendorController extends Controller
 
     $store = Vendor::create([
         'name' => $request->name,
+        'address' => $request->address,
         'descrption' => $request->description,
         'user_id' => Auth::id(),
         'thumbnail' => $path
     ]);
 
-     return redirect('/products');
+     return redirect('/vendor/dashboard');
     
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function VendorPuchases()
     {
-        //
+
+        $purchase = Orders::where('user_id', '=', Auth::id())->get();
+
+
+
+        return Inertia::render('Vendor/VendorPuchases', ['purchases' => $purchase]);
     }
 
     /**
@@ -78,8 +106,12 @@ class VendorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function AllVendorOrder()
     {
-        //
+        $vendor = Vendor::where('user_id', Auth::id())->get();
+        // $order = Orders::with('OrderItems')->where('vendor')
+        $order = OrderItem::with('vendor', 'user', 'product')->where('vendor_id',  $vendor[0]->id)->get();
+        // dd($order);
+        return Inertia::render('Vendor/VendorOrders', ['orders' => $order]);
     }
 }

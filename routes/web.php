@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Order\TrackOrder;
 use App\Http\Controllers\Order\TrackOrderController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -44,4 +45,17 @@ Route::middleware('auth')->group(function()  {
 
     Route::get('/product/check-out/success', [PaymentController::class, 'success'])->name('product.check-out.success');
     Route::get('/product/check-out/cancel', [PaymentController::class, 'cancel'])->name('product.check-out.cancel');
+
+    // vendor
+    Route::get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor-dashboard');
+    Route::get('/vendor/products', [VendorController::class, 'AllVendorProduct'])->name('vendor-products');
+    Route::get('/vendor/orders', [VendorController::class, 'AllVendorOrder'])->name('vendor-order');
+    Route::get('/setting', [VendorController::class, 'setting'])->name('vendor-setting');
+    Route::get('/VendorPuchases', [VendorController::class, 'VendorPuchases'])->name('vendor-puchase');
+
+    // buyer
+    Route::get('/buyer/dashboard', [BuyerController::class, 'index'])->name('buyer-dashboard');
+    Route::get('/buyer/purchases', [BuyerController::class, 'buyerPuchases'])->name('buyer-puchase');
+    Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('vendor-order');
+
 });

@@ -51,3 +51,41 @@ export const MinPriceSort = (products) => {
     return minimum
 
 }
+
+
+
+
+
+// <Dropdown
+// showArrow
+// classNames={{
+//     base: "before:bg-default-200", // change arrow background
+//     content:
+//         "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+// }}
+// >
+// <DropdownTrigger>
+//     <Button variant="bordered">
+//        </Button>
+// </DropdownTrigger>
+// <DropdownMenu
+//     variant="faded"
+//     aria-label="Dropdown menu with description"
+// >
+//     <DropdownSection title="Cart">
+//         {carts[0]?.cart_item?.map((product) => (
+//                 <DropdownItem
+//                     key={product.id}
+//                     shortcut={`$${product.product.price}`}
+//                     // startContent={<AddNoteIcon className={iconClasses} />}
+//                 >
+//                     {product.product.name}
+//                 </DropdownItem>
+//         ))}
+       
+//     </DropdownSection>
+  
+//     <DropdownItem href="" className="flex text-center text-sm font-bold border-2  text-black rounded border-black mb-2 w-full">Go to cart</DropdownItem>
+//     <DropdownItem className="flex text-center text-sm font-bold bg-black text-white rounded border ">Check out</DropdownItem>
+// </DropdownMenu>
+// </Dropdown>

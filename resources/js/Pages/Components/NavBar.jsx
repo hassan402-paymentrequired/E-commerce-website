@@ -11,10 +11,15 @@ import {
     cn,
 } from "@nextui-org/react";
 
+
 const NavBar = () => {
-    const { ci, wi } = usePage().props;
+    const { ci, wi , auth:user} = usePage().props;
     const { search, min, max, category, carts } = useContext(FilterContext);
     const [cartVisible, setCartVisible] = useState(false);
+
+    let link = user.role === 'vendor' ? '/vendor/dashboard' : '/buyer/dashboard';
+
+
 
     const iconClasses =
         "text-xl text-default-500 pointer-events-none flex-shrink-0";
@@ -28,21 +33,14 @@ const NavBar = () => {
                 <li className="text-xs font-semibold text-gray-700">
                     <Link href="/account">My account</Link>
                 </li>
-                <li
-                    className="text-xs font-semibold text-gray-700 relative "
+                <li className="text-xs font-semibold text-gray-700">
+                    <Link href={link}>Dashboard</Link>
+                </li>
+                <Link href="/product/cart"
+                    className="text-xs font-semibold flex  text-gray-700  "
                 >
-                    <span className="absolute top-3 right-2">{ci}</span>
-                    <Dropdown
-                        showArrow
-                        classNames={{
-                            base: "before:bg-default-200", // change arrow background
-                            content:
-                                "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
-                        }}
-                    >
-                        <DropdownTrigger>
-                            <Button variant="bordered">
-                                 <svg
+                    <span className="">{ci}</span>
+                    <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -55,30 +53,9 @@ const NavBar = () => {
                                 strokeLinejoin="round"
                                 d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
                             />
-                        </svg></Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            variant="faded"
-                            aria-label="Dropdown menu with description"
-                        >
-                            <DropdownSection title="Cart">
-                                {carts[0]?.cart_item?.map((product) => (
-                                        <DropdownItem
-                                            key={product.id}
-                                            shortcut={`$${product.product.price}`}
-                                            // startContent={<AddNoteIcon className={iconClasses} />}
-                                        >
-                                            {product.product.name}
-                                        </DropdownItem>
-                                ))}
-                               
-                            </DropdownSection>
-                          
-                            <DropdownItem href="/product/cart" className="flex text-center text-sm font-bold border-2  text-black rounded border-black mb-2 w-full">Go to cart</DropdownItem>
-                            <DropdownItem className="flex text-center text-sm font-bold bg-black text-white rounded border ">Check out</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </li>
+                        </svg>
+            
+                </Link>
                 <li className="text-xs font-semibold text-gray-700 relative">
                     <span className="absolute top-1 -right-2">{wi}</span>
                     <Link href="#">

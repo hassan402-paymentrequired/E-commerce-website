@@ -17,10 +17,21 @@ class Vendor extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function produts(): HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
+    public function orderItem(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function OrderHistory(): HasMany
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+
+    
     
 }

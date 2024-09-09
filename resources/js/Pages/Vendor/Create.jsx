@@ -7,6 +7,7 @@ const Create = () => {
     const { data, setData, post, errors, processing } = useForm({
         name: "",
         description: "",
+        address: "",
         thumbnail: "",
     });
 
@@ -21,7 +22,6 @@ const Create = () => {
         profileClick.current.click();
     };
 
-    console.log(errors);
     
     
     const uri = data.thumbnail ? URL.createObjectURL(data.thumbnail) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
@@ -88,6 +88,13 @@ const Create = () => {
                         className="input bg-transparent input-bordered w-full "
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Store name"
+                        className="input bg-transparent input-bordered w-full "
+                        value={data.address}
+                        onChange={(e) => setData("address", e.target.value)}
                     />
                     <textarea
                         className="textarea bg-transparent textarea-bordered"

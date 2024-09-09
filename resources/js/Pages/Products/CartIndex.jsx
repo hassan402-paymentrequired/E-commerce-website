@@ -6,7 +6,7 @@ import Paystack from '@paystack/inline-js';
 
 
 const CartIndex = ({carts}) => {
-
+console.log(carts)
     const [product, setProduct] = useState([]);
 
     const {auth:user} = usePage().props;

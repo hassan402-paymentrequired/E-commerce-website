@@ -23,14 +23,10 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         post("/users/register", data);
     };
 
-    // if(data.profile){
-
         const uri = data.profile !== "" ? URL.createObjectURL(data.profile) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
-    // }
 
 
     return (
@@ -131,6 +127,9 @@ const Register = () => {
                                             setData("role", e.target.value)
                                         }
                                     >
+                                        <option selected>
+                                            --Any--
+                                        </option>
                                         <option value="customer">
                                             Customer
                                         </option>

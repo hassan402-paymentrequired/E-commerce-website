@@ -43,7 +43,9 @@ class CartController extends Controller
 
             CartItem::create([
                 'product_id' => $request->product_id,
-                'cart_id' => $cartExist->all()[0]->id
+                'cart_id' => $cartExist->all()[0]->id,
+                'price' => $request->price,
+                'quantity' => $request->quantity
                ]);
 
         }else{
@@ -53,7 +55,9 @@ class CartController extends Controller
             ]);
      
             $cart->cartItem()->create([
-             'product_id' => $request->product_id
+             'product_id' => $request->product_id,
+             'price' => $request->price,
+             'quantity' => $request->quantity
             ]);
      
         }

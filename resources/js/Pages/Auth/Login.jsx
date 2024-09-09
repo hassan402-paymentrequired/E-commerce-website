@@ -2,6 +2,7 @@ import React from 'react';
 import GuestLayout from '../Layout/GuestLayout';
 import { Link, useForm } from "@inertiajs/react";
 import InputError from "../Components/InputError";
+import Modal from "../Components/Modal";
 
 const Login = () => {
     const { data, setData, post, hasErrors, errors, processing } = useForm({
@@ -31,7 +32,7 @@ const Login = () => {
 
 
                 {/* form */}
-                <div className="flex-1 p-3 md:full flex items-center justify-center  w-full h-screen overflow-y-auto">
+                <div className="flex-1 p-3 md:full flex flex-col items-center justify-center  w-full h-screen overflow-y-auto">
                   
                             <form
                                 className="w-full max-w-lg"
@@ -106,6 +107,10 @@ const Login = () => {
                                     </button>
                                 </div>
                             </form>
+
+                            <Modal/>
+
+                            <button className='absolute bottom-5 right-5 text-black text-sm '>Admin</button>
                         </div>
 
             </div>

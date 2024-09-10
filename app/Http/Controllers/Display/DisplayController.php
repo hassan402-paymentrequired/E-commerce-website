@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Order;
+namespace App\Http\Controllers\Display;
 
 use App\Http\Controllers\Controller;
-use App\Models\Orders;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class TrackOrderController extends Controller
+class DisplayController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $orders = Orders::where('user_id', '=', Auth::id())->get();
-        return Inertia::render('Profile/Order', ['orders' => $orders]);
+        return Inertia::render('Display/Index');
     }
 
     /**
@@ -40,8 +37,7 @@ class TrackOrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Orders::with(['OrderItems', 'OrderItems.Product'])->where('id', $id)->get();
-        return Inertia::render('Admin/OrderItems', ['orders' => $order]);
+        //
     }
 
     /**
@@ -65,9 +61,6 @@ class TrackOrderController extends Controller
      */
     public function destroy(string $id)
     {
-        $order = Orders::find($id);
-        $order->delete();
-
-        return redirect()->back();
+        //
     }
 }

@@ -12,7 +12,7 @@ class Vendor extends Model
 {
     use HasFactory;
 
-    public function vendor(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

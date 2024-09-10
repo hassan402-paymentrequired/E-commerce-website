@@ -54,7 +54,7 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'auth' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email', 'profile', 'role')
+                ? $request->user()->only('id', 'name', 'email', 'profile', 'role', 'is_Admin')
                 : null,
             'ci' => $cartCount,
             // 'wi' => $wishlistCountCount

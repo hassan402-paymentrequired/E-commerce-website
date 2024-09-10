@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Buyer\BuyerController;
+use App\Http\Controllers\Display\DisplayController;
 use App\Http\Controllers\Order\TrackOrder;
 use App\Http\Controllers\Order\TrackOrderController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -14,8 +16,12 @@ use App\Http\Controllers\Product\WishListController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 
+// admin
+Route::post('/admin/login', [AdminController::class, 'store'])->name('admin-login')->middleware('guest');
+  Route::get('/admin', [AdminController::class, 'index'])->name('admin-dashboard')->middleware('auth');
 
-Route::get('/', [RegisterUserController::class, 'create']);
+Route::get('/', [DisplayController::class, 'index'])->name('landing-page');
+Route::get('/register', [RegisterUserController::class, 'create']);
 Route::post('/users/register', [RegisterUserController::class, 'store']);
 Route::get('/users/login', [AuthenticateUserController::class, 'create'])->name('login');
 Route::post('/users/login', [AuthenticateUserController::class, 'store']);
@@ -33,6 +39,8 @@ Route::middleware('auth')->group(function()  {
     Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
     Route::get('/product/order/{order}',[TrackOrderController::class, 'track']);
     Route::get('/order',[TrackOrderController::class, 'index']);
+    Route::delete('/order/destroy/{id}',[TrackOrderController::class, 'destroy'])->name('order-destroy');
+    Route::get('/order/items/{id}',[TrackOrderController::class, 'show'])->name('order.show');
 
     Route::post('/product/cart', [CartController::class, 'store'])->name('cart.product.add');
     Route::post('/products/category', ProductCategory::class)->name('product_category_add');
@@ -52,10 +60,20 @@ Route::middleware('auth')->group(function()  {
     Route::get('/vendor/orders', [VendorController::class, 'AllVendorOrder'])->name('vendor-order');
     Route::get('/setting', [VendorController::class, 'setting'])->name('vendor-setting');
     Route::get('/VendorPuchases', [VendorController::class, 'VendorPuchases'])->name('vendor-puchase');
+    Route::delete('/vendor/destroy/{id}', [VendorController::class, 'destroy'])->name('vendor-destroy');
+
 
     // buyer
     Route::get('/buyer/dashboard', [BuyerController::class, 'index'])->name('buyer-dashboard');
     Route::get('/buyer/purchases', [BuyerController::class, 'buyerPuchases'])->name('buyer-puchase');
-    Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('vendor-order');
+    Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('buyer-order');
+    Route::delete('/buyer/destroy/{id}', [BuyerController::class, 'destroy'])->name('buyer-destroy');
+    
+    // admin
+    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin-products');
+    Route::get('/admin/vendors', [AdminController::class, 'vendors'])->name('admin-vendor');
+    Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin-orders');
+    Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin-buyers');
+    
 
 });

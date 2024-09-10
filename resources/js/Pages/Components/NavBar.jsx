@@ -14,6 +14,7 @@ import {
 
 const NavBar = () => {
     const { ci, wi , auth:user} = usePage().props;
+    console.log(user)
     const { search, min, max, category, carts } = useContext(FilterContext);
     const [cartVisible, setCartVisible] = useState(false);
 
@@ -25,7 +26,8 @@ const NavBar = () => {
         "text-xl text-default-500 pointer-events-none flex-shrink-0";
 
     return (
-        <divb className="w-full h-14 border-b-[1px]  justify-center pr-32">
+        <div className="w-full h-14 border-b-[1px]  justify-center pr-32">
+            {!user.is_Admin ? (
             <ul className="flex space-x-3 h-full w-full items-center justify-end">
                 <li className="text-xs font-semibold text-gray-700">
                     <Link href="/products">Shop</Link>
@@ -76,7 +78,11 @@ const NavBar = () => {
                     </Link>
                 </li>
             </ul>
-        </divb>
+
+            ) : (
+                <h2 className="text-sm text-black text-right mt-5 ">Welcome {user.name}</h2>
+            )}
+        </div>
     );
 };
 

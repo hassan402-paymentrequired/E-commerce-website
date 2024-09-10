@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
 use App\Models\Orders;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,9 +91,13 @@ class VendorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function destroy(string $id)
     {
-        //
+        $vendor = Vendor::find($id);
+        $user = User::find($vendor->user_id);
+        $user->delete();
+
+        return redirect()->back();
     }
 
     /**

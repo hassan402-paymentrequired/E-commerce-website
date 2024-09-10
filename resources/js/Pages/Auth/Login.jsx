@@ -9,6 +9,9 @@ const Login = () => {
         email: "",
         password: "",
     });
+    const put = e => {
+        post('/admin/login');
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -100,6 +103,7 @@ const Login = () => {
 
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
                                     <button
+                                   
                                         type="submit"
                                         className="rounded-md bg-black px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >
@@ -108,12 +112,12 @@ const Login = () => {
                                 </div>
                             </form>
 
-                            <Modal/>
 
-                            <button className='absolute bottom-5 right-5 text-black text-sm '>Admin</button>
+                            <button  className='absolute bottom-5 right-5 text-black text-sm '>Admin</button>
                         </div>
 
             </div>
+                            <Modal/>
         </GuestLayout>
     );
 };

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->string('price');
+            $table->string('status')->default("pending");
             $table->integer('quantity');
             $table->timestamps();
         });

@@ -295,12 +295,20 @@ const Register = () => {
                 </div>
 
                 {/* hero-img */}
-                <div className="md:flex-1 w-full h-full md:flex hidden">
+                <div className="md:flex-1 w-full h-full relative md:flex hidden">
                     <img
-                        src="https://cdn.pixabay.com/photo/2018/02/21/10/46/stock-3170020_1280.jpg"
+                        src="/storage/registerHero.jpg"
                         className="w-full h-full"
                         alt=""
                     />
+                    <div className="absolute w-20 h-20 right-20 top-5 p-2 bg-gray-20 rounded backdrop-blur-md ">
+
+                    <img
+                        src="/storage/logo.png"
+                        className="right-20"
+                        alt=""
+                    />
+                    </div>
                 </div>
             </div>
         </GuestLayout>

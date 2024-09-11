@@ -26,6 +26,8 @@ Route::post('/users/register', [RegisterUserController::class, 'store']);
 Route::get('/users/login', [AuthenticateUserController::class, 'create'])->name('login');
 Route::post('/users/login', [AuthenticateUserController::class, 'store']);
 Route::post('/users/logout', [AuthenticateUserController::class, 'destroy']);
+Route::get('/product/shop', [ProductsController::class, 'shop'])->name('shop');
+Route::get('/product/cart', [CartController::class, 'index'])->name('cart.show');
 
 
 Route::middleware('auth')->group(function()  {
@@ -48,7 +50,6 @@ Route::middleware('auth')->group(function()  {
     Route::get('/products/create', [ProductsController::class, 'create'])->name('product.create');
     Route::post('/products/create', [ProductsController::class, 'store'])->name('product.store');
     Route::get('/product/v1/{product}', [ProductsController::class, 'show'])->name('product.show');
-    Route::get('/product/cart', [CartController::class, 'index'])->name('cart.show');
     Route::delete('/product/cart-destroy/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     Route::get('/product/check-out/success', [PaymentController::class, 'success'])->name('product.check-out.success');

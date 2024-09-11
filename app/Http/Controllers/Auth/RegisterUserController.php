@@ -64,7 +64,7 @@ class RegisterUserController extends Controller
              return redirect('/vendor/store/create');
         }
 
-        return redirect('/products');
+        return redirect('/product/shop');
 
     }
 

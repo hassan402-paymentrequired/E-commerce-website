@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import { categories, Brands } from "../Components/utils.js";
+import { categories, brand } from "../Components/utils.js";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "./AuthenticatedLayout.jsx";
 import { FilterContext } from "../../context/FilterProductContext.js";

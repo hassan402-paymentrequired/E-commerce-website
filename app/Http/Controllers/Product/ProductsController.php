@@ -101,9 +101,9 @@ class ProductsController extends Controller
     {
         $product = Product::with('images', 'category', 'brand', 'reviews.user', 'vendor')->findOrFail($id);
 
-        // $reviews = Review::find()
+     
 
-        return inertia::render('Products/Show', ['product' => $product]);
+        return inertia::render('Display/Show', ['products' => $product, 'name' => $product->name]);
         
     }
 

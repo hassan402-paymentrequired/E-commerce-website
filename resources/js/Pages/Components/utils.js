@@ -188,36 +188,71 @@ export const MinPriceSort = (products) => {
 
 
 
-// <Dropdown
-// showArrow
-// classNames={{
-//     base: "before:bg-default-200", // change arrow background
-//     content:
-//         "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
-// }}
-// >
-// <DropdownTrigger>
-//     <Button variant="bordered">
-//        </Button>
-// </DropdownTrigger>
-// <DropdownMenu
-//     variant="faded"
-//     aria-label="Dropdown menu with description"
-// >
-//     <DropdownSection title="Cart">
-//         {carts[0]?.cart_item?.map((product) => (
-//                 <DropdownItem
-//                     key={product.id}
-//                     shortcut={`$${product.product.price}`}
-//                     // startContent={<AddNoteIcon className={iconClasses} />}
-//                 >
-//                     {product.product.name}
-//                 </DropdownItem>
-//         ))}
-       
-//     </DropdownSection>
-  
-//     <DropdownItem href="" className="flex text-center text-sm font-bold border-2  text-black rounded border-black mb-2 w-full">Go to cart</DropdownItem>
-//     <DropdownItem className="flex text-center text-sm font-bold bg-black text-white rounded border ">Check out</DropdownItem>
-// </DropdownMenu>
-// </Dropdown>
+export const navigation = {
+  pages: [
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/product/shop" },
+],
+  categories: [
+      {
+          id: "Category",
+          name: "Category",
+          featured: [
+              {
+                  name: "New Arrivals",
+                  href: "#",
+                  imageSrc:
+                      "https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg",
+                  imageAlt:
+                      "Drawstring top with elastic loop closure and textured interior padding.",
+              },
+              {
+                  name: "Artwork Tees",
+                  href: "#",
+                  imageSrc:
+                      "https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg",
+                  imageAlt:
+                      "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
+              },
+          ],
+          sections: [
+              {
+                  id: "clothing",
+                  name: "Clothing",
+                  items: [
+                      { name: "Tops", href: "#" },
+                      { name: "Pants", href: "#" },
+                      { name: "Sweaters", href: "#" },
+                      { name: "T-Shirts", href: "#" },
+                      { name: "Jackets", href: "#" },
+                      { name: "Activewear", href: "#" },
+                      { name: "Browse All", href: "#" },
+                  ],
+              },
+              {
+                  id: "accessories",
+                  name: "Accessories",
+                  items: [
+                      { name: "Watches", href: "#" },
+                      { name: "Wallets", href: "#" },
+                      { name: "Bags", href: "#" },
+                      { name: "Sunglasses", href: "#" },
+                      { name: "Hats", href: "#" },
+                      { name: "Belts", href: "#" },
+                  ],
+              },
+              {
+                  id: "brands",
+                  name: "Brands",
+                  items: [
+                      { name: "Re-Arranged", href: "#" },
+                      { name: "Counterfeit", href: "#" },
+                      { name: "Full Nelson", href: "#" },
+                      { name: "My Way", href: "#" },
+                  ],
+              },
+          ],
+      },
+  ],
+ 
+};

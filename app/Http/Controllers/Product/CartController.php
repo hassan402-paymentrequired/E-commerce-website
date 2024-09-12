@@ -18,8 +18,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        //  $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
-        return Inertia::render('Display/Cart', ['carts' => $carts =0]);
+         $carts = Cart::where('user_id', Auth::id())->with('cartItem.product')->get();
+        return Inertia::render('Display/Cart', ['AllCartItems' => $carts]);
     }
 
     /**
@@ -41,12 +41,26 @@ class CartController extends Controller
         // dd($cartExist->all());
         if(count($cartExist) > 0){
 
-            CartItem::create([
-                'product_id' => $request->product_id,
-                'cart_id' => $cartExist->all()[0]->id,
-                'price' => $request->price,
-                'quantity' => $request->quantity
-               ]);
+            $exist = CartItem::where('product_id', $request->product_id)
+                                ->where('cart_id', $cartExist->all()[0]->id)
+                                ->first();
+
+            // dd($exist->quantity);
+
+            if(!$exist){
+                CartItem::create([
+                    'product_id' => $request->product_id,
+                    'cart_id' => $cartExist->all()[0]->id,
+                    'price' => $request->price,
+                    'quantity' => $request->quantity
+                   ]);
+
+            }else{
+                $exist->quantity += 1; 
+            
+                $exist->save();
+            }
+
 
         }else{
 
@@ -70,9 +84,17 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function reduce(Request $request)
     {
-        //
+        $item = CartItem::where('product_id', $request->product_id)
+                          ->where('cart_id', $request->cart_id)->first();
+
+        if($item){
+            $item->quantity -= 1;
+            $item->save();
+        }
+        
+        return redirect()->back();
     }
 
     /**

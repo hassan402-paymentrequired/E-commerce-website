@@ -28,6 +28,7 @@ Route::post('/users/login', [AuthenticateUserController::class, 'store']);
 Route::post('/users/logout', [AuthenticateUserController::class, 'destroy']);
 Route::get('/product/shop', [ProductsController::class, 'shop'])->name('shop');
 Route::get('/product/cart', [CartController::class, 'index'])->name('cart.show');
+Route::post('/product/cart/reduce', [CartController::class, 'reduce'])->name('cart.count-reduce');
 
 
 Route::middleware('auth')->group(function()  {

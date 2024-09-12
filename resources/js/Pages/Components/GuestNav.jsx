@@ -21,136 +21,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link, usePage } from "@inertiajs/react";
 import { FilterContext } from "../../context/FilterProductContext";
+import { navigation } from "../Components/utils";
 
-const navigation = {
-    categories: [
-        {
-            id: "women",
-            name: "Home",
-            featured: [
-                {
-                    name: "New Arrivals",
-                    href: "#",
-                    imageSrc:
-                        "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
-                    imageAlt:
-                        "Models sitting back to back, wearing Basic Tee in black and bone.",
-                },
-                {
-                    name: "Basic Tees",
-                    href: "#",
-                    imageSrc:
-                        "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
-                    imageAlt:
-                        "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-                },
-            ],
-            sections: [
-                {
-                    id: "clothing",
-                    name: "Clothing",
-                    items: [
-                        { name: "Tops", href: "#" },
-                        { name: "Dresses", href: "#" },
-                        { name: "Pants", href: "#" },
-                        { name: "Denim", href: "#" },
-                        { name: "Sweaters", href: "#" },
-                        { name: "T-Shirts", href: "#" },
-                        { name: "Jackets", href: "#" },
-                        { name: "Activewear", href: "#" },
-                        { name: "Browse All", href: "#" },
-                    ],
-                },
-                {
-                    id: "accessories",
-                    name: "Accessories",
-                    items: [
-                        { name: "Watches", href: "#" },
-                        { name: "Wallets", href: "#" },
-                        { name: "Bags", href: "#" },
-                        { name: "Sunglasses", href: "#" },
-                        { name: "Hats", href: "#" },
-                        { name: "Belts", href: "#" },
-                    ],
-                },
-                {
-                    id: "brands",
-                    name: "Brands",
-                    items: [
-                        { name: "Full Nelson", href: "#" },
-                        { name: "My Way", href: "#" },
-                        { name: "Re-Arranged", href: "#" },
-                        { name: "Counterfeit", href: "#" },
-                        { name: "Significant Other", href: "#" },
-                    ],
-                },
-            ],
-        },
-        {
-            id: "men",
-            name: "Men",
-            featured: [
-                {
-                    name: "New Arrivals",
-                    href: "#",
-                    imageSrc:
-                        "https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg",
-                    imageAlt:
-                        "Drawstring top with elastic loop closure and textured interior padding.",
-                },
-                {
-                    name: "Artwork Tees",
-                    href: "#",
-                    imageSrc:
-                        "https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg",
-                    imageAlt:
-                        "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
-                },
-            ],
-            sections: [
-                {
-                    id: "clothing",
-                    name: "Clothing",
-                    items: [
-                        { name: "Tops", href: "#" },
-                        { name: "Pants", href: "#" },
-                        { name: "Sweaters", href: "#" },
-                        { name: "T-Shirts", href: "#" },
-                        { name: "Jackets", href: "#" },
-                        { name: "Activewear", href: "#" },
-                        { name: "Browse All", href: "#" },
-                    ],
-                },
-                {
-                    id: "accessories",
-                    name: "Accessories",
-                    items: [
-                        { name: "Watches", href: "#" },
-                        { name: "Wallets", href: "#" },
-                        { name: "Bags", href: "#" },
-                        { name: "Sunglasses", href: "#" },
-                        { name: "Hats", href: "#" },
-                        { name: "Belts", href: "#" },
-                    ],
-                },
-                {
-                    id: "brands",
-                    name: "Brands",
-                    items: [
-                        { name: "Re-Arranged", href: "#" },
-                        { name: "Counterfeit", href: "#" },
-                        { name: "Full Nelson", href: "#" },
-                        { name: "My Way", href: "#" },
-                    ],
-                },
-            ],
-        },
-    ],
-    pages: [
-        { name: "Company", href: "#" },
-        { name: "Shop", href: "/product/shop" },
-    ],
-};
+
 
 export default function GuestNav() {
     const { ci, wi, auth: user } = usePage().props;
@@ -195,14 +68,26 @@ export default function GuestNav() {
                             </button>
                         </div>
 
+                        <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                            {navigation?.pages?.map((page) => (
+                                <div key={page.name} className="flow-root">
+                                    <Link
+                                        href={page.href}
+                                        className="-m-2 block p-2 font-medium text-gray-900"
+                                    >
+                                        {page.name}
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
                         {/* Links */}
                         <TabGroup className="mt-2">
                             <div className="border-b border-gray-200">
                                 <TabList className="-mb-px flex space-x-8 px-4">
-                                    {navigation.categories.map((category) => (
+                                    {navigation?.categories?.map((category) => (
                                         <Tab
                                             key={category.name}
-                                            className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600"
+                                            className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-none data-[selected]:text-indigo-600"
                                         >
                                             {category.name}
                                         </Tab>
@@ -210,13 +95,13 @@ export default function GuestNav() {
                                 </TabList>
                             </div>
                             <TabPanels as={Fragment}>
-                                {navigation.categories.map((category) => (
+                                {navigation?.categories?.map((category) => (
                                     <TabPanel
                                         key={category.name}
                                         className="space-y-10 px-4 pb-8 pt-10"
                                     >
                                         <div className="grid grid-cols-2 gap-x-4">
-                                            {category.featured.map((item) => (
+                                            {category?.featured?.map((item) => (
                                                 <div
                                                     key={item.name}
                                                     className="group relative text-sm"
@@ -247,7 +132,7 @@ export default function GuestNav() {
                                                 </div>
                                             ))}
                                         </div>
-                                        {category.sections.map((section) => (
+                                        {category?.sections?.map((section) => (
                                             <div key={section.name}>
                                                 <p
                                                     id={`${category.id}-${section.id}-heading-mobile`}
@@ -260,7 +145,7 @@ export default function GuestNav() {
                                                     aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
                                                     className="mt-6 flex flex-col space-y-6"
                                                 >
-                                                    {section.items.map(
+                                                    {section?.items?.map(
                                                         (item) => (
                                                             <li
                                                                 key={item.name}
@@ -285,18 +170,7 @@ export default function GuestNav() {
                             </TabPanels>
                         </TabGroup>
 
-                        <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                            {navigation.pages.map((page) => (
-                                <div key={page.name} className="flow-root">
-                                    <a
-                                        href={page.href}
-                                        className="-m-2 block p-2 font-medium text-gray-900"
-                                    >
-                                        {page.name}
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
+                       
 
                         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                             <div className="flow-root">
@@ -320,7 +194,7 @@ export default function GuestNav() {
                 </div>
             </Dialog>
 
-            <header className="relative bg-white">
+            <header className="relative bg-white z-10">
                 <nav
                     aria-label="Top"
                     className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
@@ -353,7 +227,18 @@ export default function GuestNav() {
                             {/* Flyout menus */}
                             <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
                                 <div className="flex h-full space-x-8">
-                                    {navigation.categories.map((category) => (
+                                    
+                                {navigation?.pages?.map((page) => (
+                                        <Link
+                                            key={page.name}
+                                            href={page.href}
+                                            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                        >
+                                            {page.name}
+                                        </Link>
+                                    ))}
+
+                                    {navigation?.categories?.map((category) => (
                                         <Popover
                                             key={category.name}
                                             className="flex"
@@ -378,7 +263,7 @@ export default function GuestNav() {
                                                     <div className="mx-auto max-w-7xl px-8">
                                                         <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                                                             <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                                                {category.featured.map(
+                                                                {category?.featured?.map(
                                                                     (item) => (
                                                                         <div
                                                                             key={
@@ -423,7 +308,7 @@ export default function GuestNav() {
                                                                 )}
                                                             </div>
                                                             <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                                                                {category.sections.map(
+                                                                {category?.sections?.map(
                                                                     (
                                                                         section
                                                                     ) => (
@@ -445,7 +330,7 @@ export default function GuestNav() {
                                                                                 aria-labelledby={`${section.name}-heading`}
                                                                                 className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                                                             >
-                                                                                {section.items.map(
+                                                                                {section?.items?.map(
                                                                                     (
                                                                                         item
                                                                                     ) => (
@@ -480,29 +365,13 @@ export default function GuestNav() {
                                         </Popover>
                                     ))}
 
-                                    {navigation.pages.map((page) => (
-                                        <a
-                                            key={page.name}
-                                            href={page.href}
-                                            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                                        >
-                                            {page.name}
-                                        </a>
-                                    ))}
                                 </div>
                             </PopoverGroup>
 
                             <div className="ml-auto flex items-center">
                                 {user ? (
                                     <ul className="flex space-x-3 h-full w-full items-center justify-end">
-                                        <li className="text-xs font-semibold text-gray-700">
-                                            <Link href="/products">Shop</Link>
-                                        </li>
-                                        <li className="text-xs font-semibold text-gray-700">
-                                            <Link href="/account">
-                                                My account
-                                            </Link>
-                                        </li>
+                                       
                                         <li className="text-xs font-semibold text-gray-700">
                                             <Link href={link}>Dashboard</Link>
                                         </li>

@@ -14,7 +14,7 @@ const MainProductSidebar = () => {
                 <div className="flex flex-col">
                     {Object.entries(categories).map(
                         ([category, subcategories]) => (
-                            <div className="dropdown dropdown-hover">
+                            <div className="dropdown dropdown-hover" key={Math.random() + new Date().getTime()}>
                                 <div
                                     tabIndex={0}
                                     role="button"
@@ -50,7 +50,7 @@ const MainProductSidebar = () => {
 
                     {Object.entries(brand).map(
                         ([category, categoryBrands]) => (
-                            <div className="dropdown dropdown-hover">
+                            <div className="dropdown dropdown-hover" key={Math.random() + new Date().getTime()}>
                                 <div
                                     tabIndex={0}
                                     role="button"

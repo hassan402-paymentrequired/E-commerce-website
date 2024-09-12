@@ -1,6 +1,7 @@
 import React from 'react'
 import GuestNav from '../Components/GuestNav'
-import MainProducts from '../Components/MainProducts'
+import {MainProducts} from '../Components/MainProducts'
+import Footer from '../Components/Footer'
 
 const Shop = ({products}) => {
     // console.log(products)
@@ -13,6 +14,8 @@ const Shop = ({products}) => {
         </div>
 
         <MainProducts products={products}/>
+
+        <Footer/>
     </div>
   )
 }

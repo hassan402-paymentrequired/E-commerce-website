@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Events\OrderItemsStatusUpdate;
 use App\Http\Controllers\Controller;
+use App\Models\OrderItem;
 use App\Models\Orders;
+use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -57,7 +61,19 @@ class TrackOrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = OrderItem::find($id);
+        $item->status = $request->value;
+
+        $vendor = Vendor::with('user')->find($item->vendor_id);
+
+        $admin = User::where('is_Admin', true)->get();
+
+        // dd($admin[0]->id);
+
+        $item->save();
+
+        broadcast(new OrderItemsStatusUpdate($vendor->user,$item, $admin[0] ));
+        return;
     }
 
     /**

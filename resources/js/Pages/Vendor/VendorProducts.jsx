@@ -2,7 +2,6 @@ import React from "react";
 import VendorDashoardLayout from "../Layout/VendorDashboardLayout";
 
 const VendorProducts = ({ products }) => {
-    console.log(products);
     
     return (
         <VendorDashoardLayout>
@@ -28,7 +27,7 @@ const VendorProducts = ({ products }) => {
 
                         <div>
                             <h3 class="text-lg font-extrabold text-gray-800">
-                                {product.name}
+                                {product.name.substring(0, 20) + "..."}
                             </h3>
                             <p class="text-gray-600 text-sm mt-2 w-20">
                                 {product.description.substring(0, 10) + "..."}

@@ -2,7 +2,7 @@ import React from "react";
 import AdminDashboardLayout from "../Layout/AdminDashboardLayout";
 
 const OrderItems = ({ orders }) => {
-    console.log(orders);
+    // console.log(orders);
     return (
         <AdminDashboardLayout>
             <div class="font-sans  w-full mx-auto bg-white p-4">

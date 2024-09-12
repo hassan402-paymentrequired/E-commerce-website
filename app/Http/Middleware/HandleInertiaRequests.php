@@ -42,11 +42,15 @@ class HandleInertiaRequests extends Middleware
         $cartCount = Cart::where('user_id', Auth::id())->with('cartItem')->get();
         // $wishlistCountCount = Wishlist::where('user_id', Auth::id())->count();
 
-        // dd($cartCount[0]->cartItem);
+      $show = 0;
+
+        // dd('not count');
         // dd(count($cartCount));
 
         if(Auth::user()){
-            $cartCount = count($cartCount);
+            if(count($cartCount)){
+                $show = $cartCount[0]->cartItem()->count();
+            }
         }else{
             $cartCount = 0;
             $wishlistCountCount = 0;
@@ -56,7 +60,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email', 'profile', 'role', 'is_Admin')
                 : null,
-            'ci' => $cartCount,
+            'ci' => $show,
             // 'wi' => $wishlistCountCount
         ]);
     }

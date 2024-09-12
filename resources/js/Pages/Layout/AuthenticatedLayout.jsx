@@ -22,8 +22,9 @@ const AuthenticatedLayout = ({ children }) => {
             console.log(e);
         }).listen('OrderPlaceEvent', e => {
             console.log(e)
-        })
-    
+        }).listen('OrderItemsStatusUpdate', e => {
+            console.log(e)
+    })
     }, [])
     
 

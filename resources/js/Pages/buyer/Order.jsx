@@ -1,5 +1,6 @@
 import React from 'react'
 import BuyerDashboardLayout from "../Layout/BuyerDashboardLayout "
+import { Link } from '@inertiajs/react';
 
 
 const Order = ({orders}) => {
@@ -35,7 +36,7 @@ const Order = ({orders}) => {
         <div class="space-y-4 p-6">
         
           <div class="flex items-center justify-between gap-4">
-            <p class="text-sm font-normal text-gray-500 dark:text-gray-400"><span class="font-medium text-gray-900 dark:text-white">Product ID:</span> {order.order_number}</p>
+            <Link href={`/buyer/order/${order.id}`} class="text-sm font-normal text-gray-500 dark:text-gray-400"><span class="font-medium text-gray-900 dark:text-white">Product ID:</span> {order.order_number}</Link>
 
             <div class="flex items-center justify-end gap-4">
               <p class="text-base font-normal text-gray-900 dark:text-white">x2</p>

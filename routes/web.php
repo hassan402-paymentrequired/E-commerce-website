@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function()  {
     Route::post('/product/check-out', [PaymentController::class, 'redirectToGateway'])->name('pay');
     Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
     Route::get('/product/order/{order}',[TrackOrderController::class, 'track']);
+    Route::patch('/order/order_items/update/{id}',[TrackOrderController::class, 'update']);
     Route::get('/order',[TrackOrderController::class, 'index']);
     Route::delete('/order/destroy/{id}',[TrackOrderController::class, 'destroy'])->name('order-destroy');
     Route::get('/order/items/{id}',[TrackOrderController::class, 'show'])->name('order.show');
@@ -69,6 +70,7 @@ Route::middleware('auth')->group(function()  {
     Route::get('/buyer/dashboard', [BuyerController::class, 'index'])->name('buyer-dashboard');
     Route::get('/buyer/purchases', [BuyerController::class, 'buyerPuchases'])->name('buyer-puchase');
     Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('buyer-order');
+    Route::get('/buyer/order/{id}', [BuyerController::class, 'AllOrderItems'])->name('buyer-order-items');
     Route::delete('/buyer/destroy/{id}', [BuyerController::class, 'destroy'])->name('buyer-destroy');
     
     // admin

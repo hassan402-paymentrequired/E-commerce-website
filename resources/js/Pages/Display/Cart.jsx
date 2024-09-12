@@ -9,7 +9,7 @@ const Cart = ({AllCartItems}) => {
     const [carts, setcarts] = useState([])
     const {auth:user} = usePage().props
     const { search, min , max, category,  setsearch, setCart:num} = useContext(FilterContext);
-    const {get, data, setData} = useForm();
+    const {get, data, setData, delete:destroy} = useForm();
 
 
     useEffect(() => {
@@ -66,7 +66,13 @@ const Cart = ({AllCartItems}) => {
     };
   
     const removeFromCart = (itemId) => {
-      setCart(prevCart => prevCart.filter(item => item.id !== itemId));
+      if(!user){
+        
+        setCart(prevCart => prevCart.filter(item => item.id !== itemId));
+        return
+      }
+
+      destroy(`/product/cart-destroy/${itemId}`);
     };
 
     const handlecartTotal = e => {
@@ -80,6 +86,9 @@ const Cart = ({AllCartItems}) => {
 
         return price
     }
+
+    // console.log(JSON.parse(localStorage.getItem('cart')));
+    
 
   let total = handlecartTotal()
   let tax = parseFloat(7 * total / 100)  

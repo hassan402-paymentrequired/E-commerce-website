@@ -90,7 +90,7 @@ class ProductsController extends Controller
             }
         }
 
-        return redirect('/products');
+        return redirect('/product/shop');
 
     }
 

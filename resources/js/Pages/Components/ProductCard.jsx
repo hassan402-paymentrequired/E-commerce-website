@@ -4,7 +4,7 @@ import React from "react";
 const ProductCard = ({product, handleCartClick}) => {
     return (
         <div>
-            <article className="group flex rounded-md max-w-[16rem] flex-col overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
+            <article className="group h-80 flex rounded-md max-w-[16rem] flex-col overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
                 <Link href={`/product/v1/${product.id}`} className="h-40 overflow-hidden p-2 object-cover">
                     <img
                         src={`/storage/${product.image_url}`}

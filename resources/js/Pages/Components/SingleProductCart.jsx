@@ -1,38 +1,44 @@
-import React from "react";
+import { Link, router, usePage } from "@inertiajs/react";
+import React, { useState } from "react";
 
 const SingleProductCart = ({ product }) => {
+    const {auth:user} = usePage().props
     console.log(product);
     const [currentImage, setCurrentImage] = useState(product.image_url);
 
+    const handleCartItem = (product) => {
+        if(!user){
+            
+            addToCart({'product': product, 'vendor_id': product.vendor_id, 'quantity': 1 })
+            return
+        }else{
+            // console.log('db');
+
+            router.post("/product/cart", {
+                product_id: product.id,
+                price: product.price,
+                quantity: 1,
+            });
+        }
+    };
 
     return (
         <div className="p-10">
             <div class="grid items-start grid-cols-1 md:grid-cols-2 gap-6 max-lg:gap-12">
                 <div class="w-full lg:sticky top-0 sm:flex gap-2">
                     <div class="sm:space-y-3 w-16 max-sm:w-12 max-sm:flex max-sm:mb-4 max-sm:gap-4">
+                        {product?.images?.map(img => (
                         <img
-                            src="https://readymadeui.com/images/product1.webp"
+                            src={"/storage/" + img.image_url}
                             alt="Product1"
                             class="w-full cursor-pointer rounded-md outline"
+                            onClick={e => setCurrentImage(img.image_url)}
                         />
-                        <img
-                            src="https://readymadeui.com/images/product6.webp"
-                            alt="Product2"
-                            class="w-full cursor-pointer rounded-md"
-                        />
-                        <img
-                            src="https://readymadeui.com/images/product7.webp"
-                            alt="Product3"
-                            class="w-full cursor-pointer rounded-md"
-                        />
-                        <img
-                            src="https://readymadeui.com/images/product3.webp"
-                            alt="Product4"
-                            class="w-full cursor-pointer rounded-md"
-                        />
+                        ))}
                     </div>
+                
                     <img
-                        src="https://readymadeui.com/images/product2.webp"
+                         src={"/storage/" + currentImage}
                         alt="Product"
                         class="w-4/5 rounded-md object-cover"
                     />
@@ -43,12 +49,11 @@ const SingleProductCart = ({ product }) => {
 
             <div class="mt-6 sm:mt-8 lg:mt-0">
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                    Apple iMac 24" All-In-One Computer, Apple M1, 8GB RAM, 256GB
-                    SSD, Mac OS, Pink
+                {product.name}
                 </h1>
                 <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                     <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                        $1,249.99
+                        ${product.price}
                     </p>
 
                     <div class="flex items-center gap-2 mt-2 sm:mt-0">
@@ -116,15 +121,13 @@ const SingleProductCart = ({ product }) => {
                             href="#"
                             class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
                         >
-                            345 Reviews
+                            {product.reviews.length} Reviews
                         </a>
                     </div>
                 </div>
 
                 <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                    <a
-                        href="#"
-                        title=""
+                    <button
                         class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                         role="button"
                     >
@@ -146,13 +149,11 @@ const SingleProductCart = ({ product }) => {
                             />
                         </svg>
                         Add to favorites
-                    </a>
+                    </button>
 
-                    <a
-                        href="#"
-                        title=""
+                    <button
+                    onClick={() => handleCartItem(product)}
                         class="text-white mt-4 sm:mt-0 bg-black font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center"
-                        role="button"
                     >
                         <svg
                             class="w-5 h-5 -ms-2 me-2"
@@ -172,24 +173,21 @@ const SingleProductCart = ({ product }) => {
                             />
                         </svg>
                         Add to cart
-                    </a>
+                    </button>
                 </div>
 
                 <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
                 <p class="mb-6 text-gray-500 dark:text-gray-400">
-                    Studio quality three mic array for crystal clear calls and
-                    voice recordings. Six-speaker sound system for a remarkably
-                    robust and high-quality audio experience. Up to 256GB of
-                    ultrafast SSD storage.
+                {product.description}
                 </p>
 
-                <p class="text-gray-500 dark:text-gray-400">
+                {/* <p class="text-gray-500 dark:text-gray-400">
                     Two Thunderbolt USB 4 ports and up to two USB 3 ports.
                     Ultrafast Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched
                     Magic Mouse with Magic Keyboard or Magic Keyboard with Touch
                     ID.
-                </p>
+                </p> */}
             </div>
         </div>
         </div>

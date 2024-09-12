@@ -176,7 +176,7 @@ export const MainProducts = ({products}) => {
                     </div>
                 </div>
 
-                <div className="grid p-10">
+                <div className="grid grid-cols-3 gap-3 p-10">
                     {filter.map(product => (
 
                     <ProductCard key={product.id} product={product} handleCartClick={handleCartItem}/>

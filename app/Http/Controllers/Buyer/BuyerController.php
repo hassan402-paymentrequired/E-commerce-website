@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Nette\Utils\Strings;
 
 class BuyerController extends Controller
 {
@@ -35,6 +36,15 @@ class BuyerController extends Controller
         $user->delete();
 
         return redirect()->back();
+    }
+
+    public function AllOrderItems(String $id)
+    {
+
+        $order = Orders::find($id);
+        $order_items = OrderItem::where('orders_id', $order->id)->with('product', 'vendor')->get();
+        // dd($order_items);
+        return Inertia::render('buyer/OrderItems', ['orders' => $order_items]);
     }
 
 }

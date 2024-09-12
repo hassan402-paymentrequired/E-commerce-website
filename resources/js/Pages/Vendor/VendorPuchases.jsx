@@ -27,7 +27,6 @@ const VendorPuchases = ({purchases}) => {
     useEffect(() => {
         setpurchases(purchases)
     }, [])
-    console.log(purchases);
   return (
     <VendorDashoardLayout>
         <div className='p-4'>

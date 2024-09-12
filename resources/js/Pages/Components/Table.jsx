@@ -1,5 +1,7 @@
 import { router, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { format  } from './utils'
+
 
 const Table = ({ order }) => {
 
@@ -28,12 +30,9 @@ const Table = ({ order }) => {
                                             className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
                                             <div className="flex items-center gap-x-3">
-                                                <input
-                                                    type="checkbox"
-                                                    className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                />
+                                              
                                                 <button className="flex items-center gap-x-2">
-                                                    <span>Order id</span>
+                                                    <span className="sr-only">Order id</span>
 
                                                     <svg
                                                         className="h-3"
@@ -112,11 +111,11 @@ const Table = ({ order }) => {
                                                         className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                                                     />
 
-                                                    <span>#3066</span>
+                                                    <span>#{productOrdered.id}</span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {productOrdered.created_at}
+                                                {format(productOrdered.created_at)}
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                 <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">

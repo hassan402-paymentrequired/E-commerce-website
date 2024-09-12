@@ -1,7 +1,11 @@
 import React from "react";
+import { format } from "./utils";
 
 const RecentActivity = ({ recent }) => {
-  console.log(recent);
+
+
+
+
     return (
         <div class="w-10/12 xl:w-2/5 md:w-3/5 sm:w-9/12 mx-auto relative shadow-md pl-8 pr-4 sm:pl-8 lg:pr-8 py-4 my-8 rounded-lg bg-white dark:bg-gray-800">
             <div class="flex flex-wrap items-center justify-between">
@@ -47,7 +51,7 @@ const RecentActivity = ({ recent }) => {
                             </span>
                         </h3>
                         <small class="text-gray-500 dark:text-gray-300">
-                        {order.created_at}
+                        {format(order.created_at)}
                         </small>
                     </div>
                 </div>

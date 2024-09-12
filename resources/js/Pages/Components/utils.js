@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const categories = {
     "Electronics": [
       "Mobile Phones & Accessories",
@@ -256,3 +258,7 @@ export const navigation = {
   ],
  
 };
+
+export const format = date => {
+  return moment(date).format("MMM Do YY")
+}

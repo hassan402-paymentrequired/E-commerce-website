@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignId('vendor_id')->constrained()->cascadeOnDelete();
             $table->string('status');
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('transaction_id')->constrained()->cascadeOnDelete();
-
+ 
             $table->timestamps();
         });
     }

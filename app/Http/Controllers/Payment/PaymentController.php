@@ -76,6 +76,7 @@ class PaymentController extends Controller
                 'quantity' => $value->quantity,
                 'price' => $value->price,
                 'vendor_id' => $vendor->vendor->id,
+                'status' => "pending",
                 'user_id' => Auth::id(),
                 'product_id' => $value->product_id
             ]);

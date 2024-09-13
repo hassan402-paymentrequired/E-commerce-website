@@ -1,5 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import React from "react";
+import { format } from '../Components/utils'
 
 const PaymentSuccess = ({order, product}) => {
     console.log(product, order);
@@ -31,7 +32,7 @@ const PaymentSuccess = ({order, product}) => {
                                 Date
                             </dt>
                             <dd className="font-medium text-gray-900 dark:text-white sm:text-end">
-                                {order.created_at}
+                                {format(order.created_at)}
                             </dd>
                         </dl>
                         <dl className="sm:flex items-center justify-between gap-4">

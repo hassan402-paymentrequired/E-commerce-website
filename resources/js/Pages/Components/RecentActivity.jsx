@@ -45,10 +45,12 @@ const RecentActivity = ({ recent }) => {
                     </div>
                     <div class="flex-auto -ml-12 sm:-ml-16 md:-ml-0">
                         <h3 class="text-lg font-bold -mt-5 md:-mt-0 text-gray-700 dark:text-gray-200">
-                            {order.user.name}
+                            {order.user.name} just bought: <br/>
                             <span class="font-medium text-purple-600 dark:text-gray-100">
                             {order.product.name}
                             </span>
+                            <br/>
+                            from your store
                         </h3>
                         <small class="text-gray-500 dark:text-gray-300">
                         {format(order.created_at)}

@@ -64,18 +64,20 @@ Route::middleware('auth')->group(function()  {
     Route::get('/setting', [VendorController::class, 'setting'])->name('vendor-setting');
     Route::get('/VendorPuchases', [VendorController::class, 'VendorPuchases'])->name('vendor-puchase');
     Route::delete('/vendor/destroy/{id}', [VendorController::class, 'destroy'])->name('vendor-destroy');
+    Route::get('/vendor/order/{id}', action: [VendorController::class, 'AllOrderItems'])->name('vendor-order-items');
 
 
     // buyer
     Route::get('/buyer/dashboard', [BuyerController::class, 'index'])->name('buyer-dashboard');
     Route::get('/buyer/purchases', [BuyerController::class, 'buyerPuchases'])->name('buyer-puchase');
     Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('buyer-order');
-    Route::get('/buyer/order/{id}', [BuyerController::class, 'AllOrderItems'])->name('buyer-order-items');
+    Route::get('/buyer/order/{id}', action: [BuyerController::class, 'AllOrderItems'])->name('buyer-order-items');
     Route::delete('/buyer/destroy/{id}', [BuyerController::class, 'destroy'])->name('buyer-destroy');
     
     // admin
+
     Route::get('/admin/products', [AdminController::class, 'products'])->name('admin-products');
-    Route::get('/admin/vendors', [AdminController::class, 'vendors'])->name('admin-vendor');
+Route::get('/admin/vendors', [AdminController::class, 'vendors'])->name('admin-vendor');
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin-orders');
     Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin-buyers');
     

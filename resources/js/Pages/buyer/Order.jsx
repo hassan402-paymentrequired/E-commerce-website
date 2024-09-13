@@ -4,6 +4,8 @@ import { Link } from '@inertiajs/react';
 
 
 const Order = ({orders}) => {
+    console.log(orders);
+    
     console.log(orders)
     let percent_count;
     const percent = status => {

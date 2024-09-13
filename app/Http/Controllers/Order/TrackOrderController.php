@@ -68,12 +68,16 @@ class TrackOrderController extends Controller
 
         $admin = User::where('is_Admin', true)->get();
 
-        // dd($admin[0]->id);
+        // dd($admin);
+        if($admin){
 
+            $item->save();
+    
+            broadcast(new OrderItemsStatusUpdate($vendor->user,$item, $admin[0] ));
+            return;
+        }
         $item->save();
-
-        broadcast(new OrderItemsStatusUpdate($vendor->user,$item, $admin[0] ));
-        return;
+        return redirect()->back();
     }
 
     /**

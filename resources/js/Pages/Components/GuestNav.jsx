@@ -271,49 +271,7 @@ export default function GuestNav() {
                                                     <div className="mx-auto max-w-7xl px-8">
                                                         <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                                                             <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                                                {category?.featured?.map(
-                                                                    (item) => (
-                                                                        <div
-                                                                            key={
-                                                                                item.name
-                                                                            }
-                                                                            className="group relative text-base sm:text-sm"
-                                                                        >
-                                                                            <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                                                                <img
-                                                                                    alt={
-                                                                                        item.imageAlt
-                                                                                    }
-                                                                                    src={
-                                                                                        item.imageSrc
-                                                                                    }
-                                                                                    className="object-cover object-center"
-                                                                                />
-                                                                            </div>
-                                                                            <a
-                                                                                href={
-                                                                                    item.href
-                                                                                }
-                                                                                className="mt-6 block font-medium text-gray-900"
-                                                                            >
-                                                                                <span
-                                                                                    aria-hidden="true"
-                                                                                    className="absolute inset-0 z-10"
-                                                                                />
-                                                                                {
-                                                                                    item.name
-                                                                                }
-                                                                            </a>
-                                                                            <p
-                                                                                aria-hidden="true"
-                                                                                className="mt-1"
-                                                                            >
-                                                                                Shop
-                                                                                now
-                                                                            </p>
-                                                                        </div>
-                                                                    )
-                                                                )}
+                                                                <img src="/storage/logo.png" alt="" />
                                                             </div>
                                                             <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
                                                                 {category?.sections?.map(
@@ -417,7 +375,7 @@ export default function GuestNav() {
                                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
                                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                                            {ci}
+                                            {user? ci : 0}
                                         </span>
                                     </Link>
                                     {user && (

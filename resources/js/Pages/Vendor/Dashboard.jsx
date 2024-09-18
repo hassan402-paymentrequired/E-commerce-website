@@ -3,7 +3,7 @@ import VendorDashboardLayout from '../Layout/VendorDashboardLayout'
 import Chart from '../Components/Chart'
 import RecentActivity from '../Components/RecentActivity'
 
-const Dashboard = ({latestOrders, pending}) => {
+const Dashboard = ({latestOrders, pending, complete, canceled}) => {
     const [latestOrder, setLatestOrder] = useState([])
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Dashboard = ({latestOrders, pending}) => {
             </div>
             <div className="p-5 w-32 border space-y-2">
                 <span className='text-lg font-bold space-x-2'>
-                    10
+                    {complete}
                 <small className='p-1 rounded-md  font-normal text-sm bg-green-200 ml-2'>+$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>
@@ -39,7 +39,7 @@ const Dashboard = ({latestOrders, pending}) => {
             </div>
             <div className="p-5 w-32 border space-y-2">
                 <span className='text-lg font-bold space-x-2'>
-                    10
+                    {canceled}
                 <small className='p-1 rounded-md font-normal text-sm bg-red-200 ml-2'>-$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>

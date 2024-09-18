@@ -1,20 +1,37 @@
 import { router, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
-import { format  } from './utils'
-
+import { format } from "./utils";
 
 const Table = ({ order }) => {
-
     const [status, StepStatus] = useState("");
 
-    const {patch, errors, data, setData} = useForm({value: ''});
+    const { patch, errors, data, setData } = useForm({ value: "" });
 
     const ChangeStatus = (value, id) => {
-        data.value =  value
-        patch(`/order/order_items/update/${id}`);
-        
-    }
+        data.value = value;
 
+        if (data.value.toLowerCase() == "shipped") {
+            let agree = confirm(
+                "Are you sure the products are ready for shipping. An email will be sent to the Admin concerning the shipping"
+            );
+
+            if (agree) {
+                patch(`/order/order_items/update/${id}`);
+            }
+        }else if (data.value.toLowerCase() == "canceled"){
+            let agree = confirm(
+                "Are you sure you want to cancel products. An email will be sent to the Admin concerning the canceliation"
+            );
+
+            if (agree) {
+                patch(`/order/order_items/update/${id}`);
+            }
+        }
+
+        patch(`/order/order_items/update/${id}`);
+    };
+
+    // console.log(order);
 
     return (
         <section className="container px-4 mx-auto">
@@ -30,9 +47,10 @@ const Table = ({ order }) => {
                                             className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
                                             <div className="flex items-center gap-x-3">
-                                              
                                                 <button className="flex items-center gap-x-2">
-                                                    <span className="sr-only">Order id</span>
+                                                    <span className="sr-only">
+                                                        Order id
+                                                    </span>
 
                                                     <svg
                                                         className="h-3"
@@ -111,11 +129,15 @@ const Table = ({ order }) => {
                                                         className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                                                     />
 
-                                                    <span>#{productOrdered.id}</span>
+                                                    <span>
+                                                        #{productOrdered.id}
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {format(productOrdered.created_at)}
+                                                {format(
+                                                    productOrdered.created_at
+                                                )}
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                 <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
@@ -167,16 +189,77 @@ const Table = ({ order }) => {
                                                 {productOrdered.product.name}
                                             </td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <select className="select  bg-white" onChange={(e) => ChangeStatus(e.target.value, productOrdered.id)}>
-                                                    <option selected>Pending</option>
-                                                    <option>Completed</option>
-                                                    <option>
-                                                        Shipped
-                                                    </option>
-                                                    <option >
-                                                        Canceled
-                                                    </option>
-                                                </select>
+                                                { productOrdered.status.toLowerCase() ===
+                                                "shipped" ?
+                                                 (
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                                        <svg
+                                                            class="me-1 h-3 w-3"
+                                                            aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                                                            ></path>
+                                                        </svg>
+                                                        In transit
+                                                    </div>
+                                                ) : 
+                                                    productOrdered.status.toLowerCase() ===
+                                                        "canceled" ?
+                                                    (
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-red-500 dark:bg-gray-800">
+                                                        <svg
+                                                            class="me-1 h-3 w-3"
+                                                            aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M6 18 17.94 6M18 18 6.06 6"
+                                                            ></path>
+                                                        </svg>
+                                                        Cancelled
+                                                    </div>
+                                                    ) :
+                                                    (
+                                                        <select
+                                                            className="select  bg-white"
+                                                            onChange={(e) =>
+                                                                ChangeStatus(
+                                                                    e.target
+                                                                        .value,
+                                                                    productOrdered.id
+                                                                )
+                                                            }
+                                                        >
+                                                            <option>
+                                                                Pending
+                                                            </option>
+                                                            <option>
+                                                                Shipped
+                                                            </option>
+                                                            <option>
+                                                                Canceled
+                                                            </option>
+                                                        </select>
+                                                    )
+                                                }
                                             </td>
                                         </tr>
                                     ))}
@@ -187,7 +270,7 @@ const Table = ({ order }) => {
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-6">
+            {/* <div class="flex items-center justify-between mt-6">
                 <a
                     href="#"
                     class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
@@ -276,7 +359,7 @@ const Table = ({ order }) => {
                         />
                     </svg>
                 </a>
-            </div>
+            </div> */}
         </section>
     );
 };

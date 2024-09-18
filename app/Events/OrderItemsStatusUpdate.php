@@ -20,7 +20,7 @@ class OrderItemsStatusUpdate implements ShouldBroadcast
      * Create a new event instance.
      */  public function __construct(public User $vendor, public OrderItem $orderItem,  public User $admin)
     {
-        //
+        
     }
 
     /**

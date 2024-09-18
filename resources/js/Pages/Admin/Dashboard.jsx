@@ -2,7 +2,7 @@ import React from 'react'
 import AdminDashboardLayout from '../Layout/AdminDashboardLayout'
 import BasicBars from '../Components/AdminChart'
 
-const Dashboard = ({sales}) => {
+const Dashboard = ({sales, pending, complete, canceled}) => {
   return (
     <AdminDashboardLayout>
 
@@ -23,7 +23,7 @@ const Dashboard = ({sales}) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {pending}
                         </span>
                     </h2>
 
@@ -49,7 +49,7 @@ const Dashboard = ({sales}) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {complete}
                         </span>
                     </h2>
 
@@ -74,7 +74,7 @@ const Dashboard = ({sales}) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {canceled}
                         </span>
                     </h2>
 

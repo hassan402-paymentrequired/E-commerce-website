@@ -18,8 +18,9 @@ class BuyerController extends Controller
     {
         $recent = OrderItem::with('vendor', 'product')->where('user_id', Auth::id())->get();
         $pendingOder = OrderItem::where('status', "pending")->where('user_id', Auth::id())->count();
-
-        return Inertia::render('buyer/Dashboard', ['recentPurchases' => $recent, 'pending' => $pendingOder]);
+        $complete = OrderHistory::where('status', 'completed')->where('user_id', Auth::id())->count();
+        $canceled = OrderHistory::where('status', 'canceled')->where('user_id', Auth::id())->count();
+        return Inertia::render('buyer/Dashboard', ['recentPurchases' => $recent, 'pending' => $pendingOder, 'complete' =>   $complete, 'canceled' => $canceled]);
     }
     public function buyerPuchases()
     {

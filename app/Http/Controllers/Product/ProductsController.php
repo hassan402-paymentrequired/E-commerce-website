@@ -133,7 +133,7 @@ class ProductsController extends Controller
 
     public function shop()
     {
-        $products = Product::with('reviews')->get();
+        $products = Product::with('reviews', 'category','brand')->get();
         return Inertia::render('Products/Shop', ['products' => $products]);
     }
 }

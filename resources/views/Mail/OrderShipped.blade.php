@@ -5,6 +5,7 @@
     <p>Dear {{ $order->user->name }},</p>
 
     <p>We're excited to inform you that your order has been shipped!</p>
+    <p>Give the following code to the delivery man verify that you have received your order <span class="font-bold">{{ $code }}</span></p>
 
     <h3>Shipping Details:</h3>
     <ul>

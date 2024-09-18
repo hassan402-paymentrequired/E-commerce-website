@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderHistory;
 use App\Models\OrderItem;
 use App\Models\Orders;
 use App\Models\Product;
@@ -24,8 +25,10 @@ class VendorController extends Controller
         $order = OrderItem::with('vendor', 'user', 'product')->where('vendor_id',  $vendor[0]->id)->latest()->limit(4)->get();
         $vendor = Vendor::where('user_id', Auth::id())->get();
         $pendingOder = OrderItem::where('status', "pending")->where('vendor_id', $vendor[0]->id)->count();
+        $complete = OrderHistory::where('status', 'completed')->where('vendor_id', $vendor[0]->id)->count();
+        $canceled = OrderHistory::where('status', 'canceled')->where('vendor_id', $vendor[0]->id)->count();
         // dd(vars: $pendingOder);
-        return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order, 'pending' =>  $pendingOder]);
+        return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order, 'pending' =>  $pendingOder, 'complete' => $complete, 'canceled' => $canceled]);
     }
     public function setting()
     {

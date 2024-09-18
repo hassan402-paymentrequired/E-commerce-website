@@ -78,7 +78,8 @@ class CartController extends Controller
         $product = Product::find($request->product_id);
 
 
-       broadcast(new CartEvent(Auth::user(), $product ));
+    //    broadcast(new CartEvent(Auth::user(), $product ));
+    return redirect()->back();
     }
 
     /**

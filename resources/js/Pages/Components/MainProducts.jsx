@@ -9,13 +9,14 @@ export const MainProducts = ({products}) => {
     // const [cartItem, setcartItem] = useState()
 
     const { auth:user} = usePage().props;
-    const { search, min , max, category,  setsearch, setCart:num} = useContext(FilterContext);
-// console.log(user);
+    const { search, min , max, category,setCategory,  setsearch, setCart:num, brand, setBrand, range, setRange} = useContext(FilterContext);
+console.log(category);
 
     useEffect(() => {
         setproduct(products);
     }, [])
 
+// console.log(product[0].category.name.toLowerCase());
 
     const getFilterProducts = () => {
         
@@ -28,14 +29,33 @@ export const MainProducts = ({products}) => {
              
         }
 
-        if(min){
-            console.log(filterProduct);
+        if(category){
+             filterProduct = filterProduct.filter((p) => {
+                return p.category.name.toLowerCase().includes(category)
+             })
+             
+        }
+
+        if(brand){
+            filterProduct = filterProduct.filter((p) => {
+                return p.brand.name.toLowerCase().includes(brand)
+             })       
             
-            filterProduct = MinPriceSort(filterProduct);
+        }
+
+        if(range){
+            filterProduct = filterProduct.filter(p => p.price >= 0 && p.price <= range)
         }
 
         return filterProduct;
 
+    }
+
+    const clearFilter = () => {
+        setCategory("");
+        setsearch("");
+        setBrand("");
+        setRange("");
     }
 
     const filter = getFilterProducts();
@@ -170,7 +190,7 @@ export const MainProducts = ({products}) => {
                                 </li>
                             </ul>
                         </div>
-                        <button className="text-sm p-2 border rounded shadow">
+                        <button className="text-sm p-2 border rounded shadow" onClick={clearFilter}>
                             Clear filter
                         </button>
                     </div>

@@ -34,6 +34,9 @@ class RegisterUserController extends Controller
     public function store(Request $request)
     {
 
+        try {
+            
+      
 
         $validator =  $request->validate([
             'name' =>  'required',
@@ -66,6 +69,9 @@ class RegisterUserController extends Controller
 
         return redirect('/product/shop');
 
+    } catch (\Exception $e) {
+        dd($e->getMessage());
+    }
     }
 
     /**

@@ -16,7 +16,7 @@ class OrderShipped extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $products)
+    public function __construct(private $products, private $code)
     {
         //
     }
@@ -38,7 +38,7 @@ class OrderShipped extends Mailable
     {
         return new Content(
             view: 'Mail.OrderShipped',
-            with: ['order' => $this->products],
+            with: ['order' => $this->products, 'code' => $this->code],
         );
     }
 

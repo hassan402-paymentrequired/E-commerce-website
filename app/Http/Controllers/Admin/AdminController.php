@@ -50,8 +50,11 @@ class AdminController extends Controller
     public function index()
     {
         $sales = OrderHistory::latest()->get();
-        // dd($sales);a
-        return Inertia::render('Admin/Dashboard', ['sales' => $sales]);
+        $pending = OrderHistory::where('status', 'pending')->count();
+        $complete = OrderHistory::where('status', 'completed')->count();
+        $canceled = OrderHistory::where('status', 'canceled')->count();
+        // dd($pending, $complete, $canceled);
+        return Inertia::render('Admin/Dashboard', ['sales' => $sales,'pending' =>  $pending, 'complete' => $complete, 'canceled' => $canceled]);
     }
 
     public function products()
@@ -77,8 +80,11 @@ class AdminController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $code =  mt_rand(1000, 999999);
+
         $order = Orders::find($id);
         $order->status = $request->value;
+        $order->delivery_code = $code;
         $order->save();
 
         $admin = User::where('is_Admin', true)->get();
@@ -94,10 +100,9 @@ class AdminController extends Controller
             ]);
         }
 
-        // $code = Str::random(5);
-        // mt_rand()
+       
 
-        Mail::to('lateefoluwafemi303@gmail.com')->send(new OrderShipped($order_items[0]));
+        Mail::to('lateefoluwafemi303@gmail.com')->send(new OrderShipped($order_items[0], $code));
 
         return redirect()->back();
     }

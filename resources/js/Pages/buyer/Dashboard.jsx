@@ -2,8 +2,8 @@ import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import BuyerDashboardLayout from "../Layout/BuyerDashboardLayout ";
 
-const Dashboard = ({ recentPurchases, pending }) => {
-    console.log(recentPurchases);
+const Dashboard = ({ recentPurchases, pending, complete,canceled }) => {
+    console.log(complete,canceled);
     const { auth: user } = usePage().props;
     return (
         <BuyerDashboardLayout>
@@ -56,12 +56,12 @@ const Dashboard = ({ recentPurchases, pending }) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {complete}
                         </span>
                     </h2>
 
                     <p className="text-gray-500 text-sm">
-                        Total number of Completed appointments
+                        Total number of Completed orders
                     </p>
                 </div>
 
@@ -81,7 +81,7 @@ const Dashboard = ({ recentPurchases, pending }) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {canceled}
                         </span>
                     </h2>
 

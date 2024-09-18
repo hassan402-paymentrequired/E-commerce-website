@@ -26,6 +26,14 @@ const Orders = ({ orders }) => {
             if (agree) {
                 patch(`/order/admin/update/${id}`);
             }
+        }else if (data.value.toLowerCase() == "canceled"){
+            let agree = confirm(
+                "Are you sure you want to cancel products. An email will be sent to the buyer concerning the canceliation"
+            );
+
+            if (agree) {
+                patch(`/order/admin/update/${id}`);
+            }
         }
 
         patch(`/order/admin/update/${id}`);
@@ -241,6 +249,30 @@ const Orders = ({ orders }) => {
                                                             </svg>
                                                             In transit
                                                         </div>
+                                                    ) : 
+                                                    order.status.toLowerCase() ===
+                                                        "canceled" ?
+                                                    (
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-red-500 dark:bg-gray-800">
+                                                        <svg
+                                                            class="me-1 h-3 w-3"
+                                                            aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M6 18 17.94 6M18 18 6.06 6"
+                                                            ></path>
+                                                        </svg>
+                                                        Cancelled
+                                                    </div>
                                                     ) : (
                                                         <select
                                                             className="select  bg-white"
@@ -254,9 +286,6 @@ const Orders = ({ orders }) => {
                                                         >
                                                             <option selected>
                                                                 pending
-                                                            </option>
-                                                            <option>
-                                                                completed
                                                             </option>
                                                             <option>
                                                                 shipped

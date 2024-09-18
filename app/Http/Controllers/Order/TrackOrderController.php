@@ -73,8 +73,8 @@ class TrackOrderController extends Controller
 
             $item->save();
     
-            broadcast(new OrderItemsStatusUpdate($vendor->user,$item, $admin[0] ));
-            return;
+            // broadcast(new OrderItemsStatusUpdate($vendor->user,$item, $admin[0] ));
+            return redirect()->back();
         }
         $item->save();
         return redirect()->back();

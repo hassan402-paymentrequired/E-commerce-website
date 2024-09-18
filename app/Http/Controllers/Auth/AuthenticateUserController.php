@@ -40,7 +40,8 @@ class AuthenticateUserController extends Controller
             
             $request->session()->regenerate();
  
-            return redirect('/');
+
+            return redirect('/product/shop');
         }
  
         return back()->withErrors([

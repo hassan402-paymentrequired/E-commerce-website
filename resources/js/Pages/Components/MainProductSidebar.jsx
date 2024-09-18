@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { brand, categories } from "./utils";
 import Range from "./Range";
+import { FilterContext } from "../../context/FilterProductContext";
 
 const MainProductSidebar = () => {
+    const { search, min , max, category, setCategory, setsearch, setCart:num, brand: b, setBrand} = useContext(FilterContext);
+
     return (
         <div className=" col-span-2">
             {/* category */}
@@ -27,9 +30,9 @@ const MainProductSidebar = () => {
                                     className="dropdown-content menu bg-white rounded-md z-[1] w-52 p-2 shadow"
                                 >
                                     {subcategories.map((subcategory) => (
-                                        <li key={subcategory} className="p-2">
+                                        <button key={subcategory} className="p-2 text-left" onClick={e => setCategory(subcategory)}>
                                             {subcategory}
-                                        </li>
+                                        </button>
                                     ))}
                                 </ul>
                             </div>
@@ -63,9 +66,9 @@ const MainProductSidebar = () => {
                                     className="dropdown-content menu bg-white rounded-md z-[1] w-52 p-2 shadow"
                                 >
                                     {categoryBrands.map((brands) => (
-                                        <li key={brands} className="p-2">
+                                        <button key={brands} className="p-2 text-left" onClick={e => setBrand(brands)}>
                                             {brands}
-                                        </li>
+                                        </button>
                                     ))}
                                 </ul>
                             </div>

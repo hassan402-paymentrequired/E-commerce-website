@@ -2,7 +2,7 @@ import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import BuyerDashboardLayout from "../Layout/BuyerDashboardLayout ";
 
-const Dashboard = ({ recentPurchases }) => {
+const Dashboard = ({ recentPurchases, pending }) => {
     console.log(recentPurchases);
     const { auth: user } = usePage().props;
     return (
@@ -30,7 +30,7 @@ const Dashboard = ({ recentPurchases }) => {
                         </svg>
 
                         <span className="text-black text-4xl font-bold">
-                            10
+                            {pending}
                         </span>
                     </h2>
 

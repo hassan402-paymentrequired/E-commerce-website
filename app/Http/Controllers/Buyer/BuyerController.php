@@ -17,7 +17,9 @@ class BuyerController extends Controller
     public function index()
     {
         $recent = OrderItem::with('vendor', 'product')->where('user_id', Auth::id())->get();
-        return Inertia::render('buyer/Dashboard', ['recentPurchases' => $recent]);
+        $pendingOder = OrderItem::where('status', "pending")->where('user_id', Auth::id())->count();
+
+        return Inertia::render('buyer/Dashboard', ['recentPurchases' => $recent, 'pending' => $pendingOder]);
     }
     public function buyerPuchases()
     {

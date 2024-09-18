@@ -22,8 +22,10 @@ class VendorController extends Controller
     {
         $vendor = Vendor::where('user_id', Auth::id())->get();
         $order = OrderItem::with('vendor', 'user', 'product')->where('vendor_id',  $vendor[0]->id)->latest()->limit(4)->get();
-        // dd($order);
-        return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order]);
+        $vendor = Vendor::where('user_id', Auth::id())->get();
+        $pendingOder = OrderItem::where('status', "pending")->where('vendor_id', $vendor[0]->id)->count();
+        // dd(vars: $pendingOder);
+        return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order, 'pending' =>  $pendingOder]);
     }
     public function setting()
     {

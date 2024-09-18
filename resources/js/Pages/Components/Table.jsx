@@ -168,7 +168,7 @@ const Table = ({ order }) => {
                                             </td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                 <select className="select  bg-white" onChange={(e) => ChangeStatus(e.target.value, productOrdered.id)}>
-                                                    <option disabled selected>Pending</option>
+                                                    <option selected>Pending</option>
                                                     <option>Completed</option>
                                                     <option>
                                                         Shipped

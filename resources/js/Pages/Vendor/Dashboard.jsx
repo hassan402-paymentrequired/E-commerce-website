@@ -3,7 +3,7 @@ import VendorDashboardLayout from '../Layout/VendorDashboardLayout'
 import Chart from '../Components/Chart'
 import RecentActivity from '../Components/RecentActivity'
 
-const Dashboard = ({latestOrders}) => {
+const Dashboard = ({latestOrders, pending}) => {
     const [latestOrder, setLatestOrder] = useState([])
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const Dashboard = ({latestOrders}) => {
         <div className="flex justify-evenly w-full items-center">
             <div className="p-5 w-32 border space-y-2">
                 <span className='text-lg font-bold space-x-2'>
-                    10
+                    {pending}
                 <small className='p-1 rounded-md  font-normal text-sm bg-blue-200 ml-2'>$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>

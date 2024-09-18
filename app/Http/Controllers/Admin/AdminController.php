@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderShipped;
 use App\Models\OrderHistory;
 use App\Models\Orders;
 use App\Models\Product;
@@ -11,8 +12,11 @@ use App\Models\Vendor;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Inertia\Inertia;
+use Str;
+use Stripe\Climate\Order;
 
 class AdminController extends Controller
 {
@@ -20,12 +24,12 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $otp = FacadesValidator::make($request->all(), [
             'otp' => 'required'
         ]);
 
-        if($otp->fails()){
+        if ($otp->fails()) {
             return redirect()->back()->withErrors($otp);
         }
 
@@ -33,19 +37,14 @@ class AdminController extends Controller
 
         $admin = User::where('admin_passkey', $otp['otp'])->get();
 
-        
-        if($admin)
-        {
+
+        if ($admin) {
             $user = User::find($admin[0]->id);
             Auth::login($user);
             return redirect(route('admin-dashboard'));
-
         }
 
         return redirect()->back()->withErrors('Sorry the pass key is incorrect');
-
-        
-
     }
 
     public function index()
@@ -58,7 +57,7 @@ class AdminController extends Controller
     public function products()
     {
         $products = Product::with('vendor', 'category', 'brand')->get();
-         return Inertia::render('Admin/Products', ['products' => $products]);
+        return Inertia::render('Admin/Products', ['products' => $products]);
     }
     public function vendors()
     {
@@ -76,4 +75,30 @@ class AdminController extends Controller
         return Inertia::render('Admin/Orders', ['orders' => $orders]);
     }
 
+    public function update(Request $request, string $id)
+    {
+        $order = Orders::find($id);
+        $order->status = $request->value;
+        $order->save();
+
+        $admin = User::where('is_Admin', true)->get();
+
+        $order_items = Orders::where('id', $id)->with(['OrderItems.Product', 'user'])->get();
+
+        foreach ($order_items[0]->OrderItems as $value) {
+            $order_history = OrderHistory::create([
+                'user_id' => $value->user_id,
+                'product_id' => $value->product_id,
+                'status' => $value->status,
+                'vendor_id' => $value->vendor_id
+            ]);
+        }
+
+        // $code = Str::random(5);
+        // mt_rand()
+
+        Mail::to('lateefoluwafemi303@gmail.com')->send(new OrderShipped($order_items[0]));
+
+        return redirect()->back();
+    }
 }

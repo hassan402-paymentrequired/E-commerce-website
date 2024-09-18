@@ -14,6 +14,8 @@ use App\Http\Controllers\Product\ProductCategory;
 use App\Http\Controllers\Product\ProductsController;
 use App\Http\Controllers\Product\WishListController;
 use App\Http\Controllers\Vendor\VendorController;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 // admin
@@ -80,6 +82,7 @@ Route::middleware('auth')->group(function()  {
 Route::get('/admin/vendors', [AdminController::class, 'vendors'])->name('admin-vendor');
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin-orders');
     Route::get('/admin/buyers', [AdminController::class, 'buyers'])->name('admin-buyers');
-    
+    Route::patch('/order/admin/update/{id}',[AdminController::class, 'update']);
+
 
 });

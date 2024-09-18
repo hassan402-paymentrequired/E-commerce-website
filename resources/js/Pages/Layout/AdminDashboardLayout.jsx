@@ -2,19 +2,17 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import Navbar from "../Components/NavBar";
 import AuthenticatedLayout from "./AuthenticatedLayout";
+import GuestNav from "../Components/GuestNav";
 
 const AdminDashboardLayout = ({ children }) => {
     return (
         <AuthenticatedLayout>
-            <div className="flex">
+            <div className="flex flex-col">
+            <GuestNav />
+
+                <div className="flex w-full">
                 <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
-                    <Link href="#">
-                        <img
-                            className="w-auto h-7"
-                            src="https://merakiui.com/images/logo.svg"
-                            alt=""
-                        />
-                    </Link>
+                    <h2 className="text-2xl text-black font-bold">Dashboard</h2>
 
                     <div className="flex flex-col justify-between flex-1 mt-6">
                         <nav className="-mx-3 space-y-6 ">
@@ -234,11 +232,9 @@ const AdminDashboardLayout = ({ children }) => {
                         </nav>
                     </div>
                 </aside>
-                <div className="flex flex-col w-full">
-                    <Navbar />
 
                     <div
-                        className="h-screen overflow-y-auto"
+                        className="h-screen w-full overflow-y-auto"
                         style={{ scrollbarWidth: "none" }}
                     >
                         {children}

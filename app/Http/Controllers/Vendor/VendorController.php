@@ -27,7 +27,7 @@ class VendorController extends Controller
         $pendingOder = OrderItem::where('status', "pending")->where('vendor_id', $vendor[0]->id)->count();
         $complete = OrderHistory::where('status', 'completed')->where('vendor_id', $vendor[0]->id)->count();
         $canceled = OrderHistory::where('status', 'canceled')->where('vendor_id', $vendor[0]->id)->count();
-        // dd(vars: $pendingOder);
+        // dd($canceled);
         return Inertia::render('Vendor/Dashboard', ['latestOrders' =>  $order, 'pending' =>  $pendingOder, 'complete' => $complete, 'canceled' => $canceled]);
     }
     public function setting()
@@ -69,7 +69,7 @@ class VendorController extends Controller
     {
     $varibles = $request->validate([
         'name' => 'required',
-        'description' => 'required',
+        'description' => 'required|min:5',
         'address' => 'required',
         'thumbnail' => File::types(['png', 'jpeg', 'jpg', 'svg', 'webp'])
     ]);

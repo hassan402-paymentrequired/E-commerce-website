@@ -25,12 +25,20 @@ const Login = () => {
         <GuestLayout>
             <div className="w-full flex h-full">
                 {/* hero-img */}
-                <div className="md:flex-1 w-full h-full md:flex hidden">
+                <div className="md:flex-1 w-full h-full relative md:flex hidden">
                     <img
-                        src="https://cdn.pixabay.com/photo/2015/12/07/14/09/shopping-cart-1080835_1280.jpg"
+                        src="https://upload.wikimedia.org/wikipedia/commons/6/65/Product_Photography.jpg"
                         className="w-full h-full"
                         alt=""
                     />
+                    <div className="absolute w-20 h-20 left-20 top-5 p-2 bg-gray-20 rounded backdrop-blur-md ">
+
+                    <img
+                        src="/storage/logo.png"
+                        className="right-20"
+                        alt=""
+                    />
+                    </div>
                 </div>
 
 
@@ -59,6 +67,7 @@ const Login = () => {
                                             onChange={(e) =>
                                                 setData("email", e.target.value)
                                             }
+                                            required
                                         />
                                         {errors.email && (
                                             <InputError
@@ -88,6 +97,7 @@ const Login = () => {
                                                     e.target.value
                                                 )
                                             }
+                                            required
                                         />
                                         {errors.password && (
                                             <InputError
@@ -96,7 +106,7 @@ const Login = () => {
                                         )}
                                     </div>
                                     <div className="flex justify-between mx-4 w-full">
-                                        <Link href="/" className="text-xs font-semibold mt-1">Don't have an acc? <span className="underline">Sign up</span></Link>
+                                        <Link href="/register" className="text-xs font-semibold mt-1">Don't have an acc? <span className="underline">Sign up</span></Link>
                                         <Link href="/users/login" className="text-xs font-semibold mt-1 text-red-500">Forgot password</Link>
                                     </div>
                                 </div>
@@ -113,11 +123,13 @@ const Login = () => {
                             </form>
 
 
-                            <button  className='absolute bottom-5 right-5 text-black text-sm '>Admin</button>
+                            <button  className='absolute bottom-5 right-5 text-black text-sm '>
+                            <Modal/>
+                            </button>
                         </div>
 
             </div>
-                            <Modal/>
+                            
         </GuestLayout>
     );
 };

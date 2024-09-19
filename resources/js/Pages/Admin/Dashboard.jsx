@@ -1,8 +1,11 @@
 import React from 'react'
 import AdminDashboardLayout from '../Layout/AdminDashboardLayout'
 import BasicBars from '../Components/AdminChart'
+import { format } from '../Components/utils';
 
 const Dashboard = ({sales, pending, complete, canceled}) => {
+    console.log(sales);
+    
   return (
     <AdminDashboardLayout>
 
@@ -97,7 +100,39 @@ const Dashboard = ({sales, pending, complete, canceled}) => {
 
     <div className="flex flex-col">
       {sales.length ? sales.map(sale => (
-        <>hello</>
+        <>
+         <div class="transform transition cursor-pointer hover:-translate-y-2 ml-10 relative flex items-center pl-12 pr-2 sm:pl-0 sm:pr-0 sm:px-3 py-2 text-white rounded mb-5 flex-col md:flex-row space-y-5 md:space-y-0">
+                    <div class="w-8 h-8 bg-blue-200 dark:bg-gray-100 absolute -left-10 transform -translate-x-2/4 rounded-full z-10 mt-2 md:mt-0">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 mx-auto mt-1.5 text-purple-600 dark:text-gray-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                    </div>
+                    <div class="flex-auto -ml-12 sm:-ml-16 md:-ml-0">
+                        <h3 class="text-lg font-bold -mt-5 md:-mt-0 text-gray-700 dark:text-gray-200">
+                            {sale.user.name} bought: <br/>
+                            <span class="font-medium text-purple-600 dark:text-gray-100">
+                            {sale.product.name}
+                            </span>
+                            <br/>
+                            from { sale.vendor.name} store
+                        </h3>
+                        <small class="text-gray-500 dark:text-gray-300">
+                        {format(sale.created_at)}
+                        </small>
+                    </div>
+                </div>
+        </>
       )): (
         <div className="text-base text-gray-600 text-center text">No Sale at the moment</div>
       )}

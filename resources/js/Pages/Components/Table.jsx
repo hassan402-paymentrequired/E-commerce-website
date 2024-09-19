@@ -249,13 +249,13 @@ const Table = ({ order }) => {
                                                             }
                                                         >
                                                             <option>
-                                                                Pending
+                                                                pending
                                                             </option>
                                                             <option>
-                                                                Shipped
+                                                                shipped
                                                             </option>
                                                             <option>
-                                                                Canceled
+                                                                canceled
                                                             </option>
                                                         </select>
                                                     )

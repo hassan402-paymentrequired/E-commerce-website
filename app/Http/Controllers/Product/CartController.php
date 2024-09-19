@@ -55,10 +55,16 @@ class CartController extends Controller
                     'quantity' => $request->quantity
                    ]);
 
+                   return redirect()->back();
+
+
             }else{
                 $exist->quantity += 1; 
             
                 $exist->save();
+
+                return redirect()->back();
+
             }
 
 
@@ -73,13 +79,17 @@ class CartController extends Controller
              'price' => $request->price,
              'quantity' => $request->quantity
             ]);
+
+            return redirect()->back();
+
      
         }
-        $product = Product::find($request->product_id);
+        // $product = Product::find($request->product_id);
 
 
     //    broadcast(new CartEvent(Auth::user(), $product ));
-    return redirect()->back();
+    
+            return redirect()->back();
     }
 
     /**
@@ -119,7 +129,6 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        // $product = CartItem::where('product_id', $id)->get();
         $product = CartItem::where('product_id', '=', $id)->firstOrFail();
         $product->delete();
 

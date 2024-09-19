@@ -86,3 +86,4 @@ Route::get('/admin/vendors', [AdminController::class, 'vendors'])->name('admin-v
 
 
 });
+require __DIR__.'/auth.php';

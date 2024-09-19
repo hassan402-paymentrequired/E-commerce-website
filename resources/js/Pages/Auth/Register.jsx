@@ -26,6 +26,7 @@ const Register = () => {
         post("/users/register", data);
     };
 
+
         const uri = data.profile !== "" ? URL.createObjectURL(data.profile) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
 
 
@@ -41,12 +42,6 @@ const Register = () => {
                         {/* start of profile */}
                         <div className="flex flex-wrap -mx-3 mb-2">
                             <div className="w-full px-3 hidden">
-                                <label
-                                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    htmlFor="grid-password"
-                                >
-                                    Profile picture
-                                </label>
                                 <input
                                     className="appearance-none focus:shadow-sm block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded text-sm font-semibold py-2.5 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-200"
                                     type="file"
@@ -62,7 +57,7 @@ const Register = () => {
                                     
                                 >
 
-                                    <img src={uri} id="uri" alt="profile image" className={`w-full h-full rounded-full`} />
+                                    <img src={uri} id="uri"  className={`w-full h-full rounded-full`} />
 
 
                                     <span onClick={handleProfileImageUploadClick}>
@@ -108,6 +103,7 @@ const Register = () => {
                                     onChange={(e) =>
                                         setData("name", e.target.value)
                                     }
+                                    required
                                 />
                                 {errors.name && (
                                     <InputError message={errors.name} />
@@ -167,6 +163,7 @@ const Register = () => {
                                     onChange={(e) =>
                                         setData("email", e.target.value)
                                     }
+                                    required
                                 />
                                 {errors.email && (
                                     <InputError message={errors.email} />
@@ -190,6 +187,7 @@ const Register = () => {
                                     onChange={(e) =>
                                         setData("phone_number", e.target.value)
                                     }
+                                    required
                                 />
                                 {errors.phone_number && (
                                     <InputError message={errors.phone_number} />
@@ -211,6 +209,7 @@ const Register = () => {
                                     onChange={(e) =>
                                         setData("address", e.target.value)
                                     }
+                                    required
                                 />
                                 {errors.name && (
                                     <InputError message={errors.address} />
@@ -235,6 +234,7 @@ const Register = () => {
                                     onChange={(e) =>
                                         setData("password", e.target.value)
                                     }
+                                    required
                                 />
                                 {errors.password && (
                                     <InputError message={errors.password} />
@@ -265,6 +265,7 @@ const Register = () => {
                                             e.target.value
                                         )
                                     }
+                                    required
                                 />
                                 {errors.password && (
                                     <InputError

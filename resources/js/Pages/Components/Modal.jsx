@@ -17,7 +17,7 @@ const Modal = () => {
   return (
 <>
 {/* Open the modal using document.getElementById('ID').showModal() method */}
-<button className="btn" onClick={()=>document.getElementById('my_modal_2').showModal()}>open modal</button>
+<button className=" text-sm text-gray-600 hover:underline hover:text-gray-900" onClick={()=>document.getElementById('my_modal_2').showModal()}>Admin</button>
 <dialog id="my_modal_2" className="modal">
   <form className="modal-box bg-white" onSubmit={handleOtpVerification} method='POST'>
     <h3 className="font-bold text-lg">Access Verification</h3>

@@ -54,7 +54,7 @@ const Create = ({ profile, categories, brands }) => {
         name: "",
         description: "",
         price: "",
-        image: pic,
+        image: "",
         category: "",
         brand: "",
     });
@@ -63,7 +63,6 @@ const Create = ({ profile, categories, brands }) => {
         e.preventDefault();
         data.image = images[0];
         router.post("/products/create",[ data, images]);
-        // console.log([data, images])
     };
 
     return (

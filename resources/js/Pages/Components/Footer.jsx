@@ -3,9 +3,9 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='w-full grid grid-cols-6 gap-3 p-5'>
+    <div className='w-full grid sm:grid-cols-1 md:grid-cols-6 gap-3 p-5'>
 
-        <div className="border border-black col-span-1 p-5 rounded-md">
+        <div className="border border-black sm:col-span-1  md:col-span-1 p-5 rounded-md">
             <h2 className='text-xl py-2 font-semibold'>Pages</h2>
             <div className="flex flex-col space-y-3">
                 <Link href='#' className='text-sm underline'>New Arrival</Link>
@@ -16,7 +16,7 @@ const Footer = () => {
             </div>
         </div>
 
-        <div className="border border-black col-span-3 p-5 rounded-md">
+        <div className="border border-black sm:col-span-1  md:col-span-3 p-5 rounded-md">
         
         <img src="/storage/logo.png" alt="" className='w-16'/>
 
@@ -29,7 +29,7 @@ const Footer = () => {
 
         </div>
 
-        <div className="border border-black col-span-2 p-5 rounded-md">
+        <div className="border border-black sm:col-span-1  md:col-span-2 p-5 rounded-md">
             <h2 className='font-semibold text-black'>Social Link</h2>
   <aside className='p-2 flex flex-col gap-2 items-center justify-center'>
   <img src="/storage/logo.png" width={50} alt="" />
@@ -40,7 +40,7 @@ const Footer = () => {
     <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
     <p className='mt-5 font-xs text-gray-600'>In collaboration with laramic studio</p>
   </aside>
-  </div>
+        </div>
 
 
     </div>

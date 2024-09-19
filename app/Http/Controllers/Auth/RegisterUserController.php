@@ -33,19 +33,19 @@ class RegisterUserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $validator =  $request->validate([
+            'name' =>  'required',
+            'email' =>  'required|email|unique:users',
+            'address' =>  'required',
+            'role' =>  'required',
+            'phone_number' =>  'required',
+            'password' =>  'required|confirmed|min:6',
+        ]);
         try {
             
       
 
-        $validator =  $request->validate([
-            'name' =>  'required',
-            'email' =>  'required|email',
-            'address' =>  'required',
-            'role' =>  'required',
-            'phone_number' =>  'required',
-            'password' =>  ['required', 'confirmed'],
-        ]);
+
  
         if ($request->hasFile('profile'))
         {
@@ -70,7 +70,8 @@ class RegisterUserController extends Controller
         return redirect('/product/shop');
 
     } catch (\Exception $e) {
-        dd($e->getMessage());
+        // dd($e->getMessage());
+        return redirect()->back()->with(  $validator);
     }
     }
 

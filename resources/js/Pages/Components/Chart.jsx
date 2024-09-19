@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const BasicBars = () => {
+const BasicBars = ({pending, complete, canceled}) => {
   return (
     <BarChart
       
       xAxis={[{ scaleType: 'band', data: ['Active', 'Completed', 'canceled'], color: ['blue', 'red', 'blue'], }]}
-      series={[{ data: [2, 5, 6] }]}
+      series={[{ data: [pending, complete, canceled] }]}
       width={500}
       height={300}
     />

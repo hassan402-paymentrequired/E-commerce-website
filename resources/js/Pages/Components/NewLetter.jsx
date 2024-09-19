@@ -10,7 +10,7 @@ const NewLetter = () => {
 
             <p className='text-gray-500 text-sm text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tempore, non iste incidunt vitae obcaecati sequi eligendi, explicabo voluptatum iure cum ex eum aut necessitatibus magnam maxime possimus deleniti officiis?</p>
 
-        <div className="flex gap-4 items-center w-full justify-center mt-5">
+        <div className="md:flex-row flex sm:flex-col  gap-4 items-center w-full justify-center mt-5">
             <input type="text" name="subscribe" id="" placeholder='example@gmail.com' className='p-2 bg-transparent border-black border w-1/3 outline-none'/>
             <button className='w-1/6 bg-black text-sm text-white hover:text-gray-400 h-10'>Subcribe for new letter</button>
         </div>

@@ -379,8 +379,8 @@ export default function GuestNav() {
                                         </span>
                                     </Link>
                                     {user && (
-                                    <form onSubmit={handleLogOut} className="flex items-center">
-                                    <button className="flex" type="submit">
+                                    <form onSubmit={handleLogOut} className="ml-2">
+                                    <button className="inline-flex items-center px-3 py-1 rounded-sm gap-x-2 text-white bg-red-500 dark:bg-gray-800" type="submit">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 16 16"

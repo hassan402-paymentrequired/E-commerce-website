@@ -227,15 +227,15 @@ export const navigation = {
               },
 
               {
-                id: "accessories",
-                name: "Accessories",
+                id: "Electronic",
+                name: "Electronic",
                 items: [
-                    { name: "Watches", href: "#" },
-                    { name: "Wallets", href: "#" },
-                    { name: "Bags", href: "#" },
-                    { name: "Sunglasses", href: "#" },
-                    { name: "Hats", href: "#" },
-                    { name: "Belts", href: "#" },
+                    { name: "Mobile Phones & Accessories", href: "#" },
+                    { name: "Computers & Laptops", href: "#" },
+                    { name: "Audio & Headphones", href: "#" },
+                    { name: "Cameras & Photography", href: "#" },
+                    { name: "Wearable Technology", href: "#" },
+                    { name: "Smart Home Devices", href: "#" },
                 ],
             },
           ],

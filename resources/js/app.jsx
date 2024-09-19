@@ -7,6 +7,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
 import {NextUIProvider} from '@nextui-org/react'
 import FilterProductProvider from './context/FilterProductProvider';
+import { Toaster } from 'react-hot-toast';
 
 
 createInertiaApp({
@@ -16,7 +17,9 @@ createInertiaApp({
   },
   setup({ el, App, props }) {
     createRoot(el).render(
+      
       <NextUIProvider>
+        <Toaster/>
       <FilterProductProvider >
       {/* <div style={{ scrollbarWidth: '0px' }}> */}
 

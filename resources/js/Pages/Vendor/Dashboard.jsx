@@ -20,27 +20,24 @@ const Dashboard = ({latestOrders, pending, complete, canceled}) => {
 
         <div className="flex justify-evenly w-full items-center">
             <div className="p-5 w-32 border space-y-2">
-                <span className='text-lg font-bold space-x-2'>
+                <span className='text-2xl font-bold space-x-2'>
                     {pending}
-                <small className='p-1 rounded-md  font-normal text-sm bg-blue-200 ml-2'>$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>
                     Active
                 </h2>
             </div>
             <div className="p-5 w-32 border space-y-2">
-                <span className='text-lg font-bold space-x-2'>
+                <span className='text-2xl font-bold space-x-2'>
                     {complete}
-                <small className='p-1 rounded-md  font-normal text-sm bg-green-200 ml-2'>+$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>
                     Completed
                 </h2>
             </div>
             <div className="p-5 w-32 border space-y-2">
-                <span className='text-lg font-bold space-x-2'>
+                <span className='text-2xl font-bold space-x-2'>
                     {canceled}
-                <small className='p-1 rounded-md font-normal text-sm bg-red-200 ml-2'>-$384</small>
                 </span>
                 <h2 className='flex  text-gray-400'>
                     cancel
@@ -48,7 +45,7 @@ const Dashboard = ({latestOrders, pending, complete, canceled}) => {
             </div>
         </div>
 
-            <Chart />
+            <Chart pending={pending} complete={complete} canceled={canceled}/>
       </div>
    
    </div>

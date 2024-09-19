@@ -6,17 +6,14 @@ import { FilterContext } from "../../context/FilterProductContext";
 
 export const MainProducts = ({products}) => {
     const [product, setproduct] = useState([])
-    // const [cartItem, setcartItem] = useState()
 
     const { auth:user} = usePage().props;
     const { search, min , max, category,setCategory,  setsearch, setCart:num, brand, setBrand, range, setRange} = useContext(FilterContext);
-console.log(category);
 
     useEffect(() => {
         setproduct(products);
     }, [])
 
-// console.log(product[0].category.name.toLowerCase());
 
     const getFilterProducts = () => {
         

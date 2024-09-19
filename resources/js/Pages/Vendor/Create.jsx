@@ -1,8 +1,11 @@
 import React, { useRef } from "react";
 import AuthenticatedLayout from "../Layout/AuthenticatedLayout";
 import { useForm } from "@inertiajs/react";
+import toast from 'react-hot-toast';
+
 
 const Create = () => {
+
     const profileClick  = useRef();
     const { data, setData, post, errors, processing } = useForm({
         name: "",
@@ -22,15 +25,33 @@ const Create = () => {
         profileClick.current.click();
     };
 
+    // if(errors.thumbnail ){
+            
+    //         toast.error(errors.thumbnail)
+    //         console.log(errors);
+            
+    // }
+
+    // console.log(errors);
+    
     
     
     const uri = data.thumbnail ? URL.createObjectURL(data.thumbnail) : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg"
     return (
         <AuthenticatedLayout>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <h2 className="text-3xl font-semibold text-center mb-4">
-                    Almost Done setting up your store
+            <div className="grid grid-cols-2">
+
+            <div className="flex flex-col items-center  h-screen p-10 overflow-auto">
+                <div className="flex w-full flex-col p-2">
+                <h2 className="text-3xl font-bold  mb-1" >
+                    Hi, There 👋
                 </h2>
+                <p className="text-sm font-bold text-gray-500">
+                {/* Almost Done setting up your store */}
+                Let's get your store up and running in a minute
+                </p>
+
+                </div>
                 <form
                     className="flex flex-col w-full max-w-xl md:max-w-4xl  p-2 space-y-4"
                     onSubmit={handleSubmit}
@@ -88,19 +109,23 @@ const Create = () => {
                         className="input bg-transparent input-bordered w-full "
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
+                        required
                     />
                     <input
                         type="text"
-                        placeholder="Store name"
+                        placeholder="Store address"
                         className="input bg-transparent input-bordered w-full "
                         value={data.address}
                         onChange={(e) => setData("address", e.target.value)}
+                        required
                     />
                     <textarea
-                        className="textarea bg-transparent textarea-bordered"
+                        className="textarea bg-transparent resize-none textarea-bordered"
                         placeholder="Store description"
                         value={data.description}
                         onChange={(e) => setData("description", e.target.value)}
+                        rows={5}
+                        required
                     ></textarea>
 
                     <button
@@ -111,6 +136,25 @@ const Create = () => {
                     </button>
                 </form>
             </div>
+
+            <div className="md:flex-1 w-full h-full relative md:flex hidden">
+                    <img
+                        src="https://carmellamarketing.com/wp-content/uploads/2023/05/Screen-Shot-2023-05-09-at-9.50.02-AM-1024x650.png"
+                        className="w-full h-full"
+                        alt=""
+                    />
+                    <div className="absolute w-20 h-20 right-20 top-5 p-2 bg-gray-20 rounded backdrop-blur-md ">
+
+                    <img
+                        src="/storage/logo.png"
+                        className="right-20"
+                        alt=""
+                    />
+                    </div>
+                </div>
+
+            </div>
+
         </AuthenticatedLayout>
     );
 };

@@ -8,7 +8,9 @@ use App\Models\OrderItem;
 use App\Models\Orders;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response as FacadesResponse;
 use Inertia\Inertia;
 use Nette\Utils\Strings;
 
@@ -48,6 +50,31 @@ class BuyerController extends Controller
         $order_items = OrderItem::where('orders_id', $order->id)->with('product', 'vendor')->get();
         // dd($order_items);
         return Inertia::render('buyer/OrderItems', ['orders' => $order_items]);
+    }
+
+    public function setting(){
+        return Inertia::render("buyer/Setting");
+    }
+
+    public function profileUpdate(Request $request){
+
+        $user = User::find(Auth::id());
+
+        try {
+            
+            $user->email = $request->email;
+            $user->name = $request->name;
+            $user->address = $request->address;
+    
+            $user->save();
+
+            return redirect()->back();
+
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderDeleted;
 use App\Mail\OrderShipped;
 use App\Models\OrderHistory;
 use App\Models\Orders;
@@ -49,12 +50,12 @@ class AdminController extends Controller
 
     public function index()
     {
-        $sales = OrderHistory::latest()->get();
+        $sales = OrderHistory::with('user', 'vendor', 'product')->limit(3)->get();
         $pending = OrderHistory::where('status', 'pending')->count();
         $complete = OrderHistory::where('status', 'completed')->count();
         $canceled = OrderHistory::where('status', 'canceled')->count();
         // dd($pending, $complete, $canceled);
-        return Inertia::render('Admin/Dashboard', ['sales' => $sales,'pending' =>  $pending, 'complete' => $complete, 'canceled' => $canceled]);
+        return Inertia::render('Admin/Dashboard', ['sales' => $sales, 'pending' =>  $pending, 'complete' => $complete, 'canceled' => $canceled]);
     }
 
     public function products()
@@ -100,7 +101,14 @@ class AdminController extends Controller
             ]);
         }
 
-       
+        if ($order->status === "canceled") {
+            $order = Orders::find($id);
+
+            $order->delete();
+            Mail::to('lateefoluwafemi303@gmail.com')->send(new OrderDeleted('lateefoluwafemi303@gmail.com'));
+
+            return redirect()->back();
+        }
 
         Mail::to('lateefoluwafemi303@gmail.com')->send(new OrderShipped($order_items[0], $code));
 

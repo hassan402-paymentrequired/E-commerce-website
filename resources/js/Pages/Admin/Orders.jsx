@@ -38,7 +38,6 @@ const Orders = ({ orders }) => {
 
         patch(`/order/admin/update/${id}`);
     };
-    console.log(orders[0].status);
     return (
         <AdminDashboardLayout>
             <section class="container px-4 mx-auto p-4">

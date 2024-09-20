@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function()  {
     Route::post('/product/cart', [CartController::class, 'store'])->name('cart.product.add');
     Route::post('/products/category', ProductCategory::class)->name('product_category_add');
     Route::post('/product/wishlist', [WishListController::class, 'store'])->name('product.wishlist');
+    Route::get('/wishlists', [WishListController::class, 'index'])->name('product.wishlist.items');
     Route::get('/products/create', [ProductsController::class, 'create'])->name('product.create');
     Route::post('/products/create', [ProductsController::class, 'store'])->name('product.store');
     Route::get('/product/v1/{product}', [ProductsController::class, 'show'])->name('product.show');
@@ -63,7 +64,6 @@ Route::middleware('auth')->group(function()  {
     Route::get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor-dashboard');
     Route::get('/vendor/products', [VendorController::class, 'AllVendorProduct'])->name('vendor-products');
     Route::get('/vendor/orders', [VendorController::class, 'AllVendorOrder'])->name('vendor-order');
-    Route::get('/setting', [VendorController::class, 'setting'])->name('vendor-setting');
     Route::get('/VendorPuchases', [VendorController::class, 'VendorPuchases'])->name('vendor-puchase');
     Route::delete('/vendor/destroy/{id}', [VendorController::class, 'destroy'])->name('vendor-destroy');
     Route::get('/vendor/order/{id}', action: [VendorController::class, 'AllOrderItems'])->name('vendor-order-items');

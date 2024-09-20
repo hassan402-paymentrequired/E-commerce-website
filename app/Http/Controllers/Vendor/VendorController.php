@@ -32,7 +32,8 @@ class VendorController extends Controller
     }
     public function setting()
     {
-        return Inertia::render('Vendor/Setting');
+        $store = Vendor::where('user_id', Auth::id())->get();
+        return Inertia::render('Vendor/Setting', ['stores' => $store]);
     }
 
     /**
@@ -117,9 +118,29 @@ class VendorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function storeUpdate(Request $request, string $id)
     {
-        //
+        try {
+            
+            $store = Vendor::find($id);
+
+            if($store){
+                $store->name = $request->name;
+                $store->descrption = $request->descrption;
+                $store->address = $request->address;
+
+                $store->save();
+
+                return redirect()->back();
+
+            }
+
+            return redirect()->back();
+
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**

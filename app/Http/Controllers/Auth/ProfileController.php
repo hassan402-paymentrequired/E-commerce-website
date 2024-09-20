@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -56,7 +58,27 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+
+        try {
+            
+            $check = Hash::check($request->old_password, $user->password);
+    
+    
+            if( $check)
+            {
+                $user->password = $request->new_password;
+                $user->save();
+    
+                return redirect()->back();
+            }
+    
+            return redirect()->back()->withErrors($request->all());
+
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
     }
 
     /**

@@ -121,6 +121,7 @@ const Login = () => {
                                     </button>
                                 </div>
                             </form>
+                            <Link href="/auth/google" className="btn">Continue with Google</Link>
 
 
                             <button  className='absolute bottom-5 right-5 text-black text-sm '>

@@ -374,8 +374,15 @@ export default function GuestNav() {
                                             aria-hidden="true"
                                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
+                                        
                                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                                            {user? ci : 0}
+                                            {user ? ci : 0}
+                                        </span>
+                                    </Link>
+                                    <Link href="/wishlists">
+                                        <span className="ml-2"> |</span>
+                                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                                            {user ? wi : 0}
                                         </span>
                                     </Link>
                                     {user && (

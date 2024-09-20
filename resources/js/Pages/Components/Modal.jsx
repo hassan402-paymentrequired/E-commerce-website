@@ -12,7 +12,6 @@ const Modal = () => {
         e.preventDefault();
         post('/admin/login', data)
     }
-  
     console.log(errors)
   return (
 <>

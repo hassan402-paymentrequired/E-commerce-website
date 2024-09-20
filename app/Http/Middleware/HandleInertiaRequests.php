@@ -40,16 +40,20 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $cartCount = Cart::where('user_id', Auth::id())->with('cartItem')->get();
-        // $wishlistCountCount = Wishlist::where('user_id', Auth::id())->count();
+        $wishlistCountCount = Wishlist::where('user_id', Auth::id())->with('wishListItem')->get();
 
-      $show = 0;
+      $wishlist = 0;
+      $cart = 0;
 
-        // dd('not count');
+        // dd( );
         // dd(count($cartCount));
 
         if(Auth::user()){
             if(count($cartCount)){
-                $show = $cartCount[0]->cartItem()->count();
+                $cart = $cartCount[0]->cartItem()->count();
+            }
+            if(count($wishlistCountCount)){
+                $wishlist = $wishlistCountCount[0]->wishListItem()->count();
             }
         }else{
             $cartCount = 0;
@@ -60,8 +64,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email', 'profile', 'role', 'is_Admin', 'address')
                 : null,
-            'ci' => $show,
-            // 'wi' => $wishlistCountCount
+            'ci' => $cart,
+            'wi' => $wishlist
         ]);
     }
 }

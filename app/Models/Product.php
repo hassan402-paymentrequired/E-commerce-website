@@ -35,9 +35,9 @@ class Product extends Model
         return $this->hasMany(OrderHistory::class);
     }
 
-    public function wishlist():BelongsTo
+    public function wishlistItem():HasMany
     {
-        return $this->belongsTo(Wishlist::class);
+        return $this->hasMany(WishListItem::class);
     }
     public function vendor():BelongsTo
     {

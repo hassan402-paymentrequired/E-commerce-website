@@ -44,5 +44,6 @@
         "recharts": "^2.12.7",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7"
-    }
+    },
+    "proxy": "http://localhost:8000"
 }

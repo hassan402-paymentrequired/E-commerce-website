@@ -1,4 +1,4 @@
-import { Link, router, usePage } from "@inertiajs/react";
+import { Link, router, useForm, usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 
 const SingleProductCart = ({ product }) => {
@@ -12,7 +12,6 @@ const SingleProductCart = ({ product }) => {
             addToCart({'product': product, 'vendor_id': product.vendor_id, 'quantity': 1 })
             return
         }else{
-            // console.log('db');
 
             router.post("/product/cart", {
                 product_id: product.id,
@@ -21,6 +20,13 @@ const SingleProductCart = ({ product }) => {
             });
         }
     };
+
+    const handleWishListItem = (products) => {
+        router.post("/product/wishlist", {
+            product_id: products.id,
+            quantity: 1,
+        });
+    }
 
     return (
         <div className="p-10">
@@ -130,6 +136,7 @@ const SingleProductCart = ({ product }) => {
                     <button
                         class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                         role="button"
+                        onClick={() => handleWishListItem(product)}
                     >
                         <svg
                             class="w-5 h-5 -ms-2 me-2"

@@ -1,10 +1,13 @@
 import React from 'react'
 import BuyerDashboardLayout from "../Layout/BuyerDashboardLayout "
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 
 
 const Order = ({orders}) => {
-    console.log(orders);
+    const {delete: destroy, errors, data, setData} = useForm({
+        code: ''
+    })
+    console.log(orders[0].delivery_code);
     
     console.log(orders)
     let percent_count;
@@ -24,6 +27,17 @@ const Order = ({orders}) => {
                 return 0;
                 break;
         }
+    }
+
+    const orderReceived = e => {
+        e.preventDefault();
+        const agree = confirm("Are you sure you have received your package")
+        data.code =  orders[0].delivery_code
+
+        if (agree) {
+            destroy(`/buyer/order-receive/${orders[0].delivery_code}`);
+        }
+        
     }
 
   return (
@@ -66,7 +80,16 @@ const Order = ({orders}) => {
                     <div  className="text-right">
                         Delivered
                     </div>
-                </div> 
+                </div>
+                <div className='flex justify-between items-center p-2'>
+
+                {order.status === "shipped" && (
+                <button onClick={orderReceived} className="py-1 px-4 rounded bg-black text-white mt-4">delivered</button>
+                )} 
+                {order.delivery_code && (
+                <p className="py-1 px-4 rounded bg-black text-white mt-4">delivered code: {order.delivery_code}</p>
+                )} 
+                </div>
            </div>
             </div>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Display\DisplayController;
+use App\Http\Controllers\Order\OrderReceivedController;
 use App\Http\Controllers\Order\TrackOrder;
 use App\Http\Controllers\Order\TrackOrderController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -75,6 +76,7 @@ Route::middleware('auth')->group(function()  {
     Route::get('/buyer/orders', [BuyerController::class, 'AllBuyerOrders'])->name('buyer-order');
     Route::get('/buyer/order/{id}', action: [BuyerController::class, 'AllOrderItems'])->name('buyer-order-items');
     Route::delete('/buyer/destroy/{id}', [BuyerController::class, 'destroy'])->name('buyer-destroy');
+    Route::delete('/buyer/order-receive/{id}', [OrderReceivedController::class, 'OrderReceived'])->name('order-received');
     
     // admin
 
